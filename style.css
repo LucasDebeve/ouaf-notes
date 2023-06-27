@@ -22,12 +22,12 @@ body {
   font-size: 12px;
   color: var(--primary-color);
   background-color: var(--secondary-color);
+  font-family: 'Noto Sans';
 }
 
 body {
   display: flex;
   flex-direction: column;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 /*---HEADER---*/
@@ -43,7 +43,25 @@ header {
 }
 
 header h1 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.logo > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.logo span {
+  font-size: 1.8rem;
+  font-weight: 50;
+  margin-left: 0.5rem;
+
 }
 
 header nav ul {
@@ -76,8 +94,9 @@ table {
   flex: 1;
 }
 
-table > * > * > *:not(:has(> input)), table input{
-    padding: 0.6rem
+table > * > * > *:not(:has(> input)),
+table input {
+  padding: 0.6rem;
 }
 
 thead {
@@ -100,7 +119,7 @@ td > input {
   border: 0;
   outline: 0;
   background-color: transparent;
-  color: #979797
+  color: #979797;
 }
 
 td > input:focus {
@@ -129,35 +148,38 @@ tbody > tr:nth-child(odd) > td {
   background-color: var(--tertiary-color);
 }
 
-#total > td, .totalCoef, tr:not(#moyBonus) > td:last-child {
+#total > td,
+.totalCoef,
+tr:not(#moyBonus) > td:last-child {
   font-weight: bold;
 }
 
 #total > td:last-child {
-    font-size: 1.1rem;
+  font-size: 1.1rem;
 }
 
 abbr {
-    text-decoration: none;
-    cursor: help;
-    border-bottom: 1px dotted #333;
-    position: relative;
+  text-decoration: none;
+  cursor: help;
+  border-bottom: 1px dotted #333;
+  position: relative;
 }
-abbr[title], acronym[title] {
-    border-bottom: none;
+abbr[title],
+acronym[title] {
+  border-bottom: none;
 }
 
 tr > .good {
-    background-color: var(--success-color) !important;
+  background-color: var(--success-color) !important;
 }
 
 tr > .bad {
-    background-color: var(--danger-color) !important;
+  background-color: var(--danger-color) !important;
 }
 
-#moyBonus > td{
-    font-size: 1.1rem;
-    font-weight: bold;
+#moyBonus > td {
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 /*---FOOTER---*/
