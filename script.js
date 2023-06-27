@@ -164,7 +164,22 @@ function update() {
     }
 }
 
+function compterColonnesNotes() {
+    const colonnes = document.querySelectorAll("table > thead > tr > th");
+    let nbColonnes = 0;
+    for (let i = 0; i < colonnes.length; i++) {
+        const colonne = colonnes[i];
+        if (colonne.innerHTML === "Note") {
+            nbColonnes++;
+        }
+    }
+    return nbColonnes;
+}
+
 function ajouterColonneNoteCoef () {
+    if (compterColonnesNotes() >= 7) {
+        return;
+    }
     // Ajouter les titre des colonnes avant la colonne de moyenne des matière
     const moyenneMatiere = document.querySelector("table > thead > tr > th:last-child");
     moyenneMatiere.insertAdjacentHTML("beforebegin", "<th>Note</th>");
@@ -192,6 +207,9 @@ function ajouterColonneNoteCoef () {
 
 // supprimer les colonnes de note et de coef
 function supprimerColonneNoteCoef () {
+    if (compterColonnesNotes() <= 1) {
+        return;
+    }
     // Supprimer les titre des colonnes avant la colonne de moyenne des matière
     const colonne_a_supprimer = document.querySelectorAll("table > thead > tr > th:nth-last-child(-n+3):not(:last-child)");
     for (let i = 0; i < colonne_a_supprimer.length; i++) {
