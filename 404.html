@@ -5,34 +5,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404</title>
     <style>
-        body {
-          font-family: Arial, sans-serif;
-          text-align: center;
-          background-color: #f1f1f1;
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        font-size: 16px;
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* Empêche le défilement */
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f1f1f1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 4rem;
+        padding-top: 2rem;
+      }
+
+      p ~ p {
+        font-size: 1.2rem;
+        padding-top: 1rem;
+      }
+
+      p {
+        color: #666;
+        font-size: 1.4rem;
+        padding-top: 2rem;
+      }
+
+      div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 2rem;
+        gap: 3rem;
+        flex: 1;
+      }
+
+      table {
+        border-radius: 0.2rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-spacing: 0;
+        border-collapse: separate;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+      }
+
+      th {
+        border-bottom: 1px solid #ccc;
+      }
+
+      th ~ th,
+      td ~ td {
+        border-left: 1px solid #ccc;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+
+      img {
+        max-width: 400px;
+        height: auto;
+        border-radius: 0.2rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        flex: 1;
+      }
+
+      caption {
+        color: #666;
+        font-size: 0.8rem;
+        padding: 0.8rem;
+        caption-side: bottom;
+      }
+
+      @media screen and (max-width: 768px) {
+        div {
+          flex-direction: column;
+          gap: 0.5rem;
+          align-items: center;
+          justify-content: flex-start;
+          overflow-y: auto;
         }
-  
-        h1 {
-          color: #333;
-          font-size: 36px;
-          margin-top: 50px;
+
+        table, img{
+            max-width: 100%;
+            width: 100%;
+            box-shadow: none;
         }
-  
-        p {
-          color: #666;
-          font-size: 24px;
+        img{
+            object-fit: cover;
         }
-  
-        img {
-          max-width: 400px;
-          margin-top: 50px;
-          border-radius: 0.2rem;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-      </style>
+      }
+    </style>
   </head>
   <body>
     <h1>Erreur 404</h1>
-    <p>Tu t'es égaré</p>
-    <img src="https://media.tenor.com/o656qFKDzeUAAAAC/rick-astley-never-gonna-give-you-up.gif" alt="Never gonna give you up">
+    <p>Tu t'es égaré...</p>
+    <p>
+      Voici pour toi un rappel sur les codes d'erreur HTTP accompagné de la
+      danse de Rick Roll
+    </p>
+    <div>
+      <table>
+        <caption>
+          Quelques codes HTTP avec leur description
+        </caption>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>200</td>
+            <td>OK</td>
+          </tr>
+          <tr>
+            <td>400</td>
+            <td>Mauvaise requête</td>
+          </tr>
+          <tr>
+            <td>401</td>
+            <td>Non autorisé</td>
+          </tr>
+          <tr>
+            <td>403</td>
+            <td>Interdit</td>
+          </tr>
+          <tr>
+            <td>404</td>
+            <td>Page non trouvée</td>
+          </tr>
+          <tr>
+            <td>500</td>
+            <td>Erreur interne du serveur</td>
+          </tr>
+        </tbody>
+      </table>
+      <img
+        src="https://media.tenor.com/o656qFKDzeUAAAAC/rick-astley-never-gonna-give-you-up.gif"
+        alt="Never gonna give you up"
+      />
+    </div>
   </body>
 </html>
