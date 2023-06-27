@@ -1,0 +1,185 @@
+:root {
+  --primary-color: #333;
+  --secondary-color: #fff;
+  --tertiary-color: #eee;
+  --fourth-color: #ccc;
+
+  --success-color: #c5ffd2;
+  --danger-color: #ffcdd2;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-collapse: collapse;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 12px;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/*---HEADER---*/
+header {
+  flex: 0 0 60px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+header h1 {
+  font-size: 1.5rem;
+}
+
+header nav ul {
+  display: flex;
+  gap: 1rem;
+}
+
+header nav ul li {
+  list-style: none;
+}
+
+header nav ul li a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+/*---MAIN---*/
+main {
+  flex: 1;
+  padding: 0.9rem;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: auto;
+}
+
+table {
+  flex: 1;
+}
+
+table > * > * > *:not(:has(> input)), table input{
+    padding: 0.6rem
+}
+
+thead {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+thead tr th {
+  border: var(--fourth-color) 1px solid;
+}
+
+tbody > tr > td {
+  border: 1px solid var(--fourth-color);
+  width: 2rem;
+}
+
+td > input {
+  font-size: 1rem;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  color: #979797
+}
+
+td > input:focus {
+  color: var(--primary-color);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+tbody > tr > th {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  text-align: left;
+  border: var(--fourth-color) 1px solid;
+}
+
+tbody > tr:nth-child(odd) > td {
+  background-color: var(--tertiary-color);
+}
+
+#total > td, .totalCoef, tr:not(#moyBonus) > td:last-child {
+  font-weight: bold;
+}
+
+#total > td:last-child {
+    font-size: 1.1rem;
+}
+
+abbr {
+    text-decoration: none;
+    cursor: help;
+    border-bottom: 1px dotted #333;
+    position: relative;
+}
+abbr[title], acronym[title] {
+    border-bottom: none;
+}
+
+tr > .good {
+    background-color: var(--success-color) !important;
+}
+
+tr > .bad {
+    background-color: var(--danger-color) !important;
+}
+
+#moyBonus > td{
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/*---FOOTER---*/
+footer {
+  flex: 0 0 60px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+footer button {
+  width: 20%;
+  max-width: 300px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0.2rem;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
