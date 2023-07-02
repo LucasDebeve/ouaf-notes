@@ -35,7 +35,7 @@ notes.forEach((note) => {
 function calculTotalCoef(line_id) {
   let total = 0;
   const coef = document.querySelectorAll(
-    "#" + line_id + " > td:nth-child(-n+" + compterCompetences() + ")"
+    "#" + line_id + " > td:nth-child(-n+" + (compterCompetences()+1) + ")"
   );
   for (var i = 0; i < coef.length; i++) {
     if (coef[i].innerHTML !== "") {
