@@ -396,7 +396,6 @@ async function fetchNotes(url, data = {}) {
  * @returns
  */
 async function get_notes() {
-
   const loader = document.querySelector(".loader-container");
   loader.classList.remove("hidden");
 
@@ -505,22 +504,37 @@ function display_notes(notes_obj, ues, coefs) {
     }
     // Colonnes du total des coefficients
     ligne_matiere.innerHTML += "<td class='totalCoef'></td>";
-    // Colonnes des notes
-    for (let j = 0; j < max_eval; j++) {
-      if (notes_obj[i].evaluations[j]) {
-        ligne_matiere.innerHTML +=
-          "<td><input type='number' value='" +
-          notes_obj[i].evaluations[j].note +
-          "' min='0' max='20' step='0.01'></td>";
-        ligne_matiere.innerHTML +=
-          "<td><input type='number'' value='" +
-          notes_obj[i].evaluations[j].coefficient +
-          "' min='0' max='100' step='1'></td>";
-      } else {
+    // Si aucune note n'est renseignée, ajouter une colonne note=0 et coef=1 puis des colonnes vides
+    if (notes_obj[i].evaluations.length === 0) {
+      ligne_matiere.innerHTML +=
+        "<td><input type='number' value='0' min='0' max='20' step='0.01'></td>";
+      ligne_matiere.innerHTML +=
+        "<td><input type='number' value='1' min='0' max='100' step='1'></td>";
+
+      for (let j = 0; j < max_eval - 1; j++) {
         ligne_matiere.innerHTML +=
           "<td><input type='number' value='' min='0' max='20' step='0.01'></td>";
         ligne_matiere.innerHTML +=
-          "<td><input type='number'' value='' min='0' max='100' step='1'></td>";
+          "<td><input type='number' value='' min='0' max='100' step='1'></td>";
+      }
+    } else {
+      // Colonnes des notes
+      for (let j = 0; j < max_eval; j++) {
+        if (notes_obj[i].evaluations[j]) {
+          ligne_matiere.innerHTML +=
+            "<td><input type='number' value='" +
+            notes_obj[i].evaluations[j].note +
+            "' min='0' max='20' step='0.01'></td>";
+          ligne_matiere.innerHTML +=
+            "<td><input type='number'' value='" +
+            notes_obj[i].evaluations[j].coefficient +
+            "' min='0' max='100' step='1'></td>";
+        } else {
+          ligne_matiere.innerHTML +=
+            "<td><input type='number' value='' min='0' max='20' step='0.01'></td>";
+          ligne_matiere.innerHTML +=
+            "<td><input type='number'' value='' min='0' max='100' step='1'></td>";
+        }
       }
     }
     // Colonnes de la moyenne de la matière
