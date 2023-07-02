@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="shortcut icon" type="image/x-icon" href="/static/img/ouafnotes.ico" />
   <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
 
 <body>
@@ -21,16 +23,23 @@
     <div id="formContainer" style="display: none;">
       <div class="form">
         <img src="static/img/logo-urca.png" alt="urca">
+        <p>Vos données sont utilisées uniquement pour remplir le tableau de simulation. Aucun enregistrement ou
+          exploitation supplémentaire n'est effectué. Votre confidentialité est notre priorité.</p>
         <button id="CloseFormButton">X</button>
         <div class="field-holder">
           <input type="text" id="username" name="username" required>
-          <label for="username">Username</label>
+          <label for="username">Login</label>
         </div>
         <div class="field-holder">
           <input type="password" id="password" name="password" required>
-          <label for="password">Password</label>
+          <label for="password">Mot de passe</label>
         </div>
-        <button onclick="get_notes()">Get Notes</button>
+        <button onclick="get_notes()"><span class="material-symbols-outlined">
+            send
+          </span></button>
+        <div class="loader-container hidden">
+          <div class="loader"></div>
+        </div>
       </div>
     </div>
   </header>
@@ -527,9 +536,15 @@
     </table>
   </main>
   <footer>
-    <button onclick="update()">Update</button>
-    <button onclick="ajouterColonneNoteCoef()">Add Note</button>
-    <button onclick="supprimerColonneNoteCoef()">Remove Note</button>
+    <button onclick="update()"><span class="material-symbols-outlined">
+        refresh
+      </span></button>
+    <button onclick="ajouterColonneNoteCoef()"><span class="material-symbols-outlined">
+        add
+      </span></button>
+    <button onclick="supprimerColonneNoteCoef()"><span class="material-symbols-outlined">
+        delete
+      </span></button>
   </footer>
   <script src="script.js"></script>
 </body>

@@ -227,7 +227,6 @@ function update() {
       (compterCompetences() + 1) +
       "):not(:first-child)"
   );
-  console.log(competences);
 
   for (let i = 0; i < competences.length; i++) {
     const competence = competences[i];
@@ -376,7 +375,6 @@ async function fetchNotes(url, data = {}) {
       return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
     })
     .join("&");
-  console.log(body);
   const response = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -398,6 +396,10 @@ async function fetchNotes(url, data = {}) {
  * @returns
  */
 async function get_notes() {
+
+  const loader = document.querySelector(".loader-container");
+  loader.classList.remove("hidden");
+
   // Recupérer le username et password
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
@@ -411,6 +413,7 @@ async function get_notes() {
   );
 
   if (notes_json.error) {
+    loader.classList.add("hidden");
     alert(notes_json.error);
     return;
   }
@@ -419,6 +422,8 @@ async function get_notes() {
   localStorage.setItem("notes", JSON.stringify(notes_json));
 
   display_notes(notes_json[0], notes_json[1], notes_json[2]);
+
+  loader.classList.add("hidden");
 
   let formContainer = document.getElementById("formContainer");
   formContainer.style.display = "none";
