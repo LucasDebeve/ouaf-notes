@@ -1,4 +1,10 @@
-const coefs = document.querySelectorAll(
+// Vérifie le local storage pour récupérer les notes, coefs et ues
+const notes_json = JSON.parse(localStorage.getItem("notes"));
+if (notes_json) {
+  display_notes(notes_json[0], notes_json[1], notes_json[2]);
+}
+else {
+  const coefs = document.querySelectorAll(
   "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+9):nth-child(2n):not(:last-child)"
 );
 const notes = document.querySelectorAll(
@@ -17,6 +23,9 @@ notes.forEach((note) => {
     note.innerHTML.replace(",", ".") +
     "' min='0' max='20' step='0.01'>";
 });
+}
+
+
 
 /**
  * Calcul le total des coefficients d'une matière
@@ -218,7 +227,7 @@ function update() {
   // Parcours des colonnes des compétences
   const competences = document.querySelectorAll(
     "table > thead > tr > th:nth-child(-n+" +
-      (compterCompetences()+1) +
+      (compterCompetences() + 1) +
       "):not(:first-child)"
   );
   console.log(competences);
@@ -272,7 +281,7 @@ function compterColonnesNotes() {
 
 /**
  * Ajoute une colonne de note et de coef
- * @returns 
+ * @returns
  */
 function ajouterColonneNoteCoef() {
   if (compterColonnesNotes() >= 7) {
@@ -316,7 +325,7 @@ function ajouterColonneNoteCoef() {
 
 /**
  * Supprime une colonne de note et de coef
- * @returns 
+ * @returns
  */
 function supprimerColonneNoteCoef() {
   if (compterColonnesNotes() <= 1) {
@@ -395,6 +404,7 @@ async function get_notes() {
   // Recupérer le username et password
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
+
   const notes_json = await fetchNotes(
     "https://api-notes-dev.vercel.app/notes",
     {
@@ -408,9 +418,13 @@ async function get_notes() {
     return;
   }
 
-  const notes_obj = notes_json[0];
-  const ues = notes_json[1];
-  const coefs = notes_json[2];
+  // Mémoriser les notes, coefs et ues dans le local storage
+  localStorage.setItem("notes", JSON.stringify(notes_json));
+
+  display_notes(notes_json[0], notes_json[1], notes_json[2]);
+}
+
+function display_notes(notes_obj, ues, coefs) {
   // Supprimer les entetes de UE
   const colonne_ues = document.querySelectorAll("thead > tr > th.ue");
   for (let i = 0; i < colonne_ues.length; i++) {
@@ -466,13 +480,17 @@ async function get_notes() {
     ligne_matiere.innerHTML = "<th>" + notes_obj[i].matiere + "</th>";
     // Colonnes des coefficients
     for (let j = 0; j < ues.length; j++) {
+      let w = 0;
+      while (w < coefs.length && !coefs[w].matiere.includes(notes_obj[i].matiere)) {
+        w++;
+      }
       let k = 0;
-      while (k < coefs[i].coefs.length && coefs[i].coefs[k].ue !== ues[j].id) {
+      while (k < coefs[w].coefs.length && coefs[w].coefs[k].ue !== ues[j].id) {
         k++;
       }
 
-      if (k < coefs[i].coefs.length) {
-        ligne_matiere.innerHTML += "<td>" + coefs[i].coefs[k].coef + "</td>";
+      if (k < coefs[w].coefs.length) {
+        ligne_matiere.innerHTML += "<td>" + coefs[w].coefs[k].coef + "</td>";
       } else {
         ligne_matiere.innerHTML += "<td></td>";
       }
