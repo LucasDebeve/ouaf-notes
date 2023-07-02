@@ -2,30 +2,27 @@
 const notes_json = JSON.parse(localStorage.getItem("notes"));
 if (notes_json) {
   display_notes(notes_json[0], notes_json[1], notes_json[2]);
-}
-else {
+} else {
   const coefs = document.querySelectorAll(
-  "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+9):nth-child(2n):not(:last-child)"
-);
-const notes = document.querySelectorAll(
-  "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+9):nth-child(2n-1):not(:last-child)"
-);
+    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+9):nth-child(2n):not(:last-child)"
+  );
+  const notes = document.querySelectorAll(
+    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+9):nth-child(2n-1):not(:last-child)"
+  );
 
-coefs.forEach((coef) => {
-  coef.innerHTML =
-    "<input type='number' value='" +
-    coef.innerHTML.replace(",", ".") +
-    "' min='0' max='100' step='1'>";
-});
-notes.forEach((note) => {
-  note.innerHTML =
-    "<input type='number' value='" +
-    note.innerHTML.replace(",", ".") +
-    "' min='0' max='20' step='0.01'>";
-});
+  coefs.forEach((coef) => {
+    coef.innerHTML =
+      "<input type='number' value='" +
+      coef.innerHTML.replace(",", ".") +
+      "' min='0' max='100' step='1'>";
+  });
+  notes.forEach((note) => {
+    note.innerHTML =
+      "<input type='number' value='" +
+      note.innerHTML.replace(",", ".") +
+      "' min='0' max='20' step='0.01'>";
+  });
 }
-
-
 
 /**
  * Calcul le total des coefficients d'une matière
@@ -35,7 +32,7 @@ notes.forEach((note) => {
 function calculTotalCoef(line_id) {
   let total = 0;
   const coef = document.querySelectorAll(
-    "#" + line_id + " > td:nth-child(-n+" + (compterCompetences()+1) + ")"
+    "#" + line_id + " > td:nth-child(-n+" + (compterCompetences() + 1) + ")"
   );
   for (var i = 0; i < coef.length; i++) {
     if (coef[i].innerHTML !== "") {
@@ -422,6 +419,9 @@ async function get_notes() {
   localStorage.setItem("notes", JSON.stringify(notes_json));
 
   display_notes(notes_json[0], notes_json[1], notes_json[2]);
+
+  let formContainer = document.getElementById("formContainer");
+  formContainer.style.display = "none";
 }
 
 function display_notes(notes_obj, ues, coefs) {
@@ -481,7 +481,10 @@ function display_notes(notes_obj, ues, coefs) {
     // Colonnes des coefficients
     for (let j = 0; j < ues.length; j++) {
       let w = 0;
-      while (w < coefs.length && !coefs[w].matiere.includes(notes_obj[i].matiere)) {
+      while (
+        w < coefs.length &&
+        !coefs[w].matiere.includes(notes_obj[i].matiere)
+      ) {
         w++;
       }
       let k = 0;
