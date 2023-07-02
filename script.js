@@ -544,6 +544,8 @@ function display_notes(notes_obj, ues, coefs) {
     const ligne_moyenne = document.querySelector("#total");
     ligne_moyenne.insertAdjacentElement("beforebegin", ligne_matiere);
   }
+
+  update();
 }
 
 document
