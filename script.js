@@ -18,11 +18,15 @@ notes.forEach((note) => {
     "' min='0' max='20' step='0.01'>";
 });
 
-// Calcul des Totaux des coefficients
+/**
+ * Calcul le total des coefficients d'une matière
+ * @param {*} line_id id de la ligne de la matière
+ * @returns le total des coefficients de la matière
+ */
 function calculTotalCoef(line_id) {
   let total = 0;
   const coef = document.querySelectorAll(
-    "#" + line_id + " > td:nth-child(-n+7)"
+    "#" + line_id + " > td:nth-child(-n+" + compterCompetences() + ")"
   );
   for (var i = 0; i < coef.length; i++) {
     if (coef[i].innerHTML !== "") {
@@ -36,6 +40,11 @@ function calculTotalCoef(line_id) {
   return parseInt(total);
 }
 
+/**
+ * Calcul la moyenne d'une matière
+ * @param {*} line_id id de la ligne de la matière
+ * @returns la moyenne de la matière
+ */
 function calculMoyenneMatiere(line_id) {
   const Notes = document.querySelectorAll(
     "#" +
@@ -65,6 +74,12 @@ function calculMoyenneMatiere(line_id) {
   return Math.round((sommeNotesCoef / sommeCoef) * 1000) / 1000;
 }
 
+/**
+ * Calcul la moyenne générale du bulletin
+ * @param {int} totalCoefs Somme des coefficients de chaque matière
+ * @param {array} moyennesMatieres Moyenne de chaque matière
+ * @returns la moyenne générale du bulletin
+ */
 function moyenneTotale(totalCoefs, moyennesMatieres) {
   let somme = 0;
   for (var i = 0; i < totalCoefs.length; i++) {
@@ -89,6 +104,10 @@ function moyenneTotale(totalCoefs, moyennesMatieres) {
   return moyenne;
 }
 
+/**
+ * Calcul la moyenne de l'intranet
+ * @param {*} moyennesMatieres  Moyenne de chaque matière
+ */
 function moyenneIntranet(moyennesMatieres) {
   let somme = 0;
   for (var i = 0; i < moyennesMatieres.length; i++) {
@@ -101,6 +120,11 @@ function moyenneIntranet(moyennesMatieres) {
     "</abbr>";
 }
 
+/**
+ * Calcul le total des coefficients d'une compétence
+ * @param {*} competence_id id de la colonne de la compétence
+ * @returns le total des coefficients de la compétence
+ */
 function totalCompetence(competence_id) {
   const lignes = document.querySelectorAll(
     "table > tbody > tr:not(#moy, #moyBonus, #total)"
@@ -122,6 +146,10 @@ function totalCompetence(competence_id) {
   return total;
 }
 
+/**
+ * Calcul la moyenne d'une compétence
+ * @param {*} competence_id id de la colonne de la compétence
+ */
 function moyenneCompetence(competence_id) {
   const lignes = document.querySelectorAll(
     "table > tbody > tr:not(#moy, #moyBonus, #total)"
@@ -147,6 +175,10 @@ function moyenneCompetence(competence_id) {
   ).innerHTML = Math.round(moyenne * 1000) / 1000;
 }
 
+/**
+ * Calcul la moyenne d'une compétence avec bonus
+ * @param {*} competence_id id de la colonne de la compétence
+ */
 function moyenneBonus(competence_id) {
   const moyenne = parseFloat(
     document.querySelector("#moy > td:nth-child(" + competence_id + ")")
@@ -170,11 +202,27 @@ function moyenneBonus(competence_id) {
   }
 }
 
+/**
+ * Compte le nombre de compétences
+ * @returns le nombre de compétences
+ */
+function compterCompetences() {
+  const competences = document.querySelectorAll("table > thead > tr > th.ue");
+  return competences.length;
+}
+
+/**
+ * Actualise les totaux et moyennes
+ */
 function update() {
   // Parcours des colonnes des compétences
   const competences = document.querySelectorAll(
-    "table > thead > tr > th:nth-child(-n+7):not(:first-child)"
+    "table > thead > tr > th:nth-child(-n+" +
+      (compterCompetences()+1) +
+      "):not(:first-child)"
   );
+  console.log(competences);
+
   for (let i = 0; i < competences.length; i++) {
     const competence = competences[i];
     totalCompetence(i + 2);
@@ -206,6 +254,10 @@ function update() {
   }
 }
 
+/**
+ *  Compte les colonnes de notes
+ * @returns le nombre de colonnes de notes
+ */
 function compterColonnesNotes() {
   const colonnes = document.querySelectorAll("table > thead > tr > th");
   let nbColonnes = 0;
@@ -218,6 +270,10 @@ function compterColonnesNotes() {
   return nbColonnes;
 }
 
+/**
+ * Ajoute une colonne de note et de coef
+ * @returns 
+ */
 function ajouterColonneNoteCoef() {
   if (compterColonnesNotes() >= 7) {
     return;
@@ -258,7 +314,10 @@ function ajouterColonneNoteCoef() {
   total.insertAdjacentHTML("beforebegin", "<td></td>");
 }
 
-// supprimer les colonnes de note et de coef
+/**
+ * Supprime une colonne de note et de coef
+ * @returns 
+ */
 function supprimerColonneNoteCoef() {
   if (compterColonnesNotes() <= 1) {
     return;
@@ -299,6 +358,12 @@ function supprimerColonneNoteCoef() {
   }
 }
 
+/**
+ * Récupère les notes depuis l'API
+ * @param {*} url url de l'API
+ * @param {*} data paramètres de la requête
+ * @returns les notes, coefs et ues
+ */
 async function fetchNotes(url, data = {}) {
   const body = Object.keys(data)
     .map((key) => {
@@ -322,6 +387,10 @@ async function fetchNotes(url, data = {}) {
   return await response.json();
 }
 
+/**
+ * Récupère les notes depuis l'API et les affiche
+ * @returns
+ */
 async function get_notes() {
   // Recupérer le username et password
   const username = document.getElementById("username").value;
@@ -386,11 +455,27 @@ async function get_notes() {
   // Ajouter les lignes de matières
   for (let i = 0; i < notes_obj.length; i++) {
     let ligne_matiere = document.createElement("tr");
-    ligne_matiere.id = notes_obj[i].matiere;
+    if (notes_obj[i].matiere.includes("Bonification")) {
+      ligne_matiere.id = "bonus";
+    } else {
+      ligne_matiere.id = notes_obj[i].matiere
+        .replace(" ", "_")
+        .replace("'", "_")
+        .replace(".", "_");
+    }
     ligne_matiere.innerHTML = "<th>" + notes_obj[i].matiere + "</th>";
     // Colonnes des coefficients
-    for (let j = 0; j < 6; j++) {
-      ligne_matiere.innerHTML += "<td></td>";
+    for (let j = 0; j < ues.length; j++) {
+      let k = 0;
+      while (k < coefs[i].coefs.length && coefs[i].coefs[k].ue !== ues[j].id) {
+        k++;
+      }
+
+      if (k < coefs[i].coefs.length) {
+        ligne_matiere.innerHTML += "<td>" + coefs[i].coefs[k].coef + "</td>";
+      } else {
+        ligne_matiere.innerHTML += "<td></td>";
+      }
     }
     // Colonnes du total des coefficients
     ligne_matiere.innerHTML += "<td class='totalCoef'></td>";
