@@ -305,7 +305,7 @@ async function fetchNotes(url, data = {}) {
       return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
     })
     .join("&");
-    console.log(body)
+  console.log(body);
   const response = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -333,14 +333,20 @@ async function get_notes() {
       password: password,
     }
   );
-  console.log(typeof notes_json);
 
   if (notes_json.error) {
     alert(notes_json.error);
     return;
   }
-  
-  const notes_obj = notes_json;
+
+  const notes_obj = notes_json[0];
+  const ues = notes_json[1];
+  const coefs = notes_json[2];
+  // Supprimer les entetes de UE
+  const colonne_ues = document.querySelectorAll("thead > tr > th.ue");
+  for (let i = 0; i < colonne_ues.length; i++) {
+    colonne_ues[i].remove();
+  }
   // Supprimer toutes les lignes de matières
   const lignes_matieres = document.querySelectorAll(
     "tbody > tr:not(#moy, #moyBonus, #total)"
@@ -366,6 +372,15 @@ async function get_notes() {
     for (let i = 0; i < nb_colonnes_notes - max_eval; i++) {
       supprimerColonneNoteCoef();
     }
+  }
+
+  // Ajouter les entetes de UE
+  for (let i = 0; i < ues.length; i++) {
+    let entete_ue = document.createElement("th");
+    entete_ue.classList.add("ue");
+    entete_ue.innerHTML = ues[i].name;
+    const entete_total = document.querySelector("#totalCoef");
+    entete_total.insertAdjacentElement("beforebegin", entete_ue);
   }
 
   // Ajouter les lignes de matières
@@ -399,7 +414,6 @@ async function get_notes() {
     }
     // Colonnes de la moyenne de la matière
     ligne_matiere.innerHTML += "<td></td>";
-  
 
     // Ajouter la ligne au tableau, avant la ligne des totaux
     const ligne_moyenne = document.querySelector("#total");
