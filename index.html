@@ -1,525 +1,537 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OuafNotes</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="/static/img/ouafnotes.ico" />
-    <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
-  </head>
-  <body>
-    <header>
-      <div class="logo">
-        <img class="logo" src="static/img/log_big.png" alt="icon" />
-        <h1>OuafNotes</h1><span>INFO - S2</span>
-      </div>
 
-      <nav>
-        <ul>
-          <li><a href="">INFO</a></li>
-          <li><a href="">GC</a></li>
-          <li><a href="">GEA</a></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <table>
-        <thead>
-          <tr>
-            <th>Matière</th>
-            <th>Realiser</th>
-            <th>Optimiser</th>
-            <th>Administrer</th>
-            <th>Gérer</th>
-            <th>Conduire</th>
-            <th>Collaborer</th>
-            <th>Total</th>
-            <th>Note</th>
-            <th>Coefficient</th>
-            <th>Note</th>
-            <th>Coefficient</th>
-            <th>Note</th>
-            <th>Coefficient</th>
-            <th>Note</th>
-            <th>Coefficient</th>
-            <th>Moyenne matière</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id="bonus">
-            <th>Bonus</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>20</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="portfolio">
-            <th>PORTFOLIO</th>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td class="totalCoef"></td>
-            <td>17</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="s201">
-            <th>SAE 201</th>
-            <td>38</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>17,75</td>
-            <td>1</td>
-            <td>17,75</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="s202">
-            <th>SAE 202</th>
-            <td></td>
-            <td>38</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>19,57</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="s203">
-            <th>SAE 203</th>
-            <td></td>
-            <td></td>
-            <td>38</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>15</td>
-            <td>60</td>
-            <td>14</td>
-            <td>40</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="s204">
-            <th>SAE 204</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>38</td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>18,25</td>
-            <td>50</td>
-            <td>15</td>
-            <td>50</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="s205">
-            <th>SAE 205</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>38</td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>16,14</td>
-            <td>30</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="s206">
-            <th>SAE 206</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>38</td>
-            <td class="totalCoef"></td>
-            <td>14</td>
-            <td>40</td>
-            <td>14</td>
-            <td>60</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r201">
-            <th>R201</th>
-            <td>21</td>
-            <td>15</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>15</td>
-            <td>1</td>
-            <td>14,75</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r202">
-            <th>R202</th>
-            <td>21</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>3</td>
-            <td>3</td>
-            <td class="totalCoef"></td>
-            <td>17,5</td>
-            <td>60</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r203">
-            <th>R203</th>
-            <td>12</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>6</td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>18</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r204">
-            <th>R204</th>
-            <td></td>
-            <td>12</td>
-            <td>36</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>16</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r205">
-            <th>R205</th>
-            <td></td>
-            <td></td>
-            <td>15</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>16,75</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r206">
-            <th>R206</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>3</td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>17,75</td>
-            <td>1</td>
-            <td>18,5</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r207">
-            <th>R207</th>
-            <td></td>
-            <td>21</td>
-            <td></td>
-            <td></td>
-            <td>6</td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>19</td>
-            <td>60</td>
-            <td>20</td>
-            <td>40</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r208">
-            <th>R208</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>12</td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>16,75</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r209">
-            <th>R209</th>
-            <td></td>
-            <td>12</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>20</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r210">
-            <th>R210</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>17</td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>18</td>
-            <td>1</td>
-            <td>19,9</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r211">
-            <th>R211</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>12</td>
-            <td>3</td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td>14,5</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r212">
-            <th>R212</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>17</td>
-            <td class="totalCoef"></td>
-            <td>17</td>
-            <td>20</td>
-            <td>15</td>
-            <td>50</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r213">
-            <th>R213</th>
-            <td></td>
-            <td></td>
-            <td>6</td>
-            <td>6</td>
-            <td>9</td>
-            <td>11</td>
-            <td class="totalCoef"></td>
-            <td>17,75</td>
-            <td>1</td>
-            <td>16</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="r214">
-            <th>R214</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>11</td>
-            <td class="totalCoef"></td>
-            <td>17</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id="total">
-            <th>Total</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="totalCoef"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td id="moyenneGenerale"></td>
-          </tr>
-          <tr id="moy">
-            <th>MOYENNE</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>17</td>
-          </tr>
-          <tr id="moyBonus">
-            <th>+Bonus</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </main>
-    <footer>
-      <button onclick="update()">Update</button>
-      <button onclick="ajouterColonneNoteCoef()">Add Note</button>
-      <button onclick="supprimerColonneNoteCoef()">Remove Note</button>
-    </footer>
-    <script src="script.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OuafNotes</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="shortcut icon" type="image/x-icon" href="/static/img/ouafnotes.ico" />
+  <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img class="logo" src="static/img/log_big.png" alt="icon" />
+      <h1>OuafNotes</h1><span>INFO - S2</span>
+    </div>
+
+    <button id="showFormButton">Afficher le formulaire</button>
+    <div id="formContainer" style="display: none;">
+      <div class="form">
+        <img src="static/img/logo-urca.png" alt="urca">
+        <button id="CloseFormButton">X</button>
+        <div class="field-holder">
+          <input type="text" id="username" name="username" required>
+          <label for="username">Username</label>
+        </div>
+        <div class="field-holder">
+          <input type="password" id="password" name="password" required>
+          <label for="password">Password</label>
+        </div>
+        <button onclick="get_notes()">Get Notes</button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>Matière</th>
+          <th>Realiser</th>
+          <th>Optimiser</th>
+          <th>Administrer</th>
+          <th>Gérer</th>
+          <th>Conduire</th>
+          <th>Collaborer</th>
+          <th>Total</th>
+          <th>Note</th>
+          <th>Coefficient</th>
+          <th>Note</th>
+          <th>Coefficient</th>
+          <th>Note</th>
+          <th>Coefficient</th>
+          <th>Note</th>
+          <th>Coefficient</th>
+          <th>Moyenne matière</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="bonus">
+          <th>Bonus</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>20</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="portfolio">
+          <th>PORTFOLIO</th>
+          <td>2</td>
+          <td>2</td>
+          <td>2</td>
+          <td>2</td>
+          <td>2</td>
+          <td>2</td>
+          <td class="totalCoef"></td>
+          <td>17</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="s201">
+          <th>SAE 201</th>
+          <td>38</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>17,75</td>
+          <td>1</td>
+          <td>17,75</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="s202">
+          <th>SAE 202</th>
+          <td></td>
+          <td>38</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>19,57</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="s203">
+          <th>SAE 203</th>
+          <td></td>
+          <td></td>
+          <td>38</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>15</td>
+          <td>60</td>
+          <td>14</td>
+          <td>40</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="s204">
+          <th>SAE 204</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>38</td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>18,25</td>
+          <td>50</td>
+          <td>15</td>
+          <td>50</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="s205">
+          <th>SAE 205</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>38</td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>16,14</td>
+          <td>30</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="s206">
+          <th>SAE 206</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>38</td>
+          <td class="totalCoef"></td>
+          <td>14</td>
+          <td>40</td>
+          <td>14</td>
+          <td>60</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r201">
+          <th>R201</th>
+          <td>21</td>
+          <td>15</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>15</td>
+          <td>1</td>
+          <td>14,75</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r202">
+          <th>R202</th>
+          <td>21</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>3</td>
+          <td>3</td>
+          <td class="totalCoef"></td>
+          <td>17,5</td>
+          <td>60</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r203">
+          <th>R203</th>
+          <td>12</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>6</td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>18</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r204">
+          <th>R204</th>
+          <td></td>
+          <td>12</td>
+          <td>36</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>16</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r205">
+          <th>R205</th>
+          <td></td>
+          <td></td>
+          <td>15</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>16,75</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r206">
+          <th>R206</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>3</td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>17,75</td>
+          <td>1</td>
+          <td>18,5</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r207">
+          <th>R207</th>
+          <td></td>
+          <td>21</td>
+          <td></td>
+          <td></td>
+          <td>6</td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>19</td>
+          <td>60</td>
+          <td>20</td>
+          <td>40</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r208">
+          <th>R208</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>12</td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>16,75</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r209">
+          <th>R209</th>
+          <td></td>
+          <td>12</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>20</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r210">
+          <th>R210</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>17</td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>18</td>
+          <td>1</td>
+          <td>19,9</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r211">
+          <th>R211</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>12</td>
+          <td>3</td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td>14,5</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r212">
+          <th>R212</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>17</td>
+          <td class="totalCoef"></td>
+          <td>17</td>
+          <td>20</td>
+          <td>15</td>
+          <td>50</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r213">
+          <th>R213</th>
+          <td></td>
+          <td></td>
+          <td>6</td>
+          <td>6</td>
+          <td>9</td>
+          <td>11</td>
+          <td class="totalCoef"></td>
+          <td>17,75</td>
+          <td>1</td>
+          <td>16</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="r214">
+          <th>R214</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>11</td>
+          <td class="totalCoef"></td>
+          <td>17</td>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="total">
+          <th>Total</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="totalCoef"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td id="moyenneGenerale"></td>
+        </tr>
+        <tr id="moy">
+          <th>MOYENNE</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>17</td>
+        </tr>
+        <tr id="moyBonus">
+          <th>+Bonus</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+  <footer>
+    <button onclick="update()">Update</button>
+    <button onclick="ajouterColonneNoteCoef()">Add Note</button>
+    <button onclick="supprimerColonneNoteCoef()">Remove Note</button>
+  </footer>
+  <script src="script.js"></script>
+</body>
+
 </html>
