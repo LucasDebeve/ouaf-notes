@@ -417,15 +417,14 @@ async function get_notes() {
     }
   );
 
-  console.log(notes_json);
 
   if (notes_json.err) {
-    console.log(notes_json.err);
     loader.classList.add("hidden");
     alert(notes_json.err);
     return;
   } else if (notes_json[0].length === 0) {
-    console.log("Aucune note trouvée");
+    loader.classList.add("hidden");
+    alert("Aucune note trouvée");
   } else {
     // Mémoriser les notes, coefs et ues dans le local storage
     localStorage.setItem("notes", JSON.stringify(notes_json));
