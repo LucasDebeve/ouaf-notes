@@ -419,7 +419,7 @@ async function get_notes() {
 
   console.log(notes_json);
 
-  if (!notes_json.ok) {
+  if (notes_json.err) {
     console.log(notes_json.err);
     loader.classList.add("hidden");
     alert(notes_json.err);
@@ -560,7 +560,6 @@ function display_notes(notes_obj, ues, coefs) {
     const ligne_moyenne = document.querySelector("#total");
     ligne_moyenne.insertAdjacentElement("beforebegin", ligne_matiere);
   }
-
   update();
 }
 
