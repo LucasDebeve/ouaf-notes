@@ -346,3 +346,36 @@ footer button {
     width: auto;
   }
 }
+
+@media only print {
+  .print-hidden {
+    display: none;
+  }
+
+  .print-visible {
+    display: block;
+    overflow: visible;
+    font-size: 10px;
+    padding: 0;
+  }
+  .print-visible > *,
+  .print-visible > * > *,
+  .print-visible > * > * > *,
+  .print-visible #total > td:last-child,
+  .print-visible #moyBonus > td {
+    font-size: 10px;
+  }
+
+  .print-visible tr > .good {
+    background-color: var(--success-color) !important;
+  }
+
+  .print-visible tr > .bad {
+    background-color: var(--danger-color) !important;
+  }
+}
+
+body {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}

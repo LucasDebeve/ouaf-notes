@@ -417,7 +417,6 @@ async function get_notes() {
     }
   );
 
-
   if (notes_json.err) {
     loader.classList.add("hidden");
     alert(notes_json.err);
@@ -560,6 +559,10 @@ function display_notes(notes_obj, ues, coefs) {
     ligne_moyenne.insertAdjacentElement("beforebegin", ligne_matiere);
   }
   update();
+}
+
+function export_as_pdf() {
+  window.print();
 }
 
 document
