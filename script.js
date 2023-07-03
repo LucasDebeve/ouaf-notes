@@ -409,11 +409,13 @@ async function get_notes() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  // https://api-notes-dev.vercel.app/notes
-  const notes_json = await fetchNotes("http://localhost:5000/notes", {
-    username: username,
-    password: password,
-  });
+  const notes_json = await fetchNotes(
+    "https://api-notes-dev.vercel.app/notes",
+    {
+      username: username,
+      password: password,
+    }
+  );
 
   console.log(notes_json);
 
