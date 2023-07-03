@@ -219,7 +219,7 @@ function moyenneBonus(competence_id) {
  * @returns le nombre de compétences
  */
 function compterCompetences() {
-  const competences = document.querySelectorAll("table > thead > tr > th.ue");
+  const competences = document.querySelectorAll(".ue");
   return competences.length;
 }
 
@@ -455,6 +455,7 @@ function display_notes(notes_obj, ues, coefs) {
       lignes_matieres[i].remove();
     }
   }
+
   // Compter le nombre max de notes par matière
   let max_eval = 0;
   for (let i = 0; i < notes_obj.length; i++) {
@@ -464,6 +465,7 @@ function display_notes(notes_obj, ues, coefs) {
   }
 
   const nb_colonnes_notes = compterColonnesNotes();
+
   // Ajouter ou supprimer des colonnes de notes et de coef
   if (max_eval > nb_colonnes_notes) {
     for (let i = 0; i < max_eval - nb_colonnes_notes; i++) {
@@ -472,6 +474,39 @@ function display_notes(notes_obj, ues, coefs) {
   } else if (max_eval < nb_colonnes_notes) {
     for (let i = 0; i < nb_colonnes_notes - max_eval; i++) {
       supprimerColonneNoteCoef();
+    }
+  }
+
+  // Ajouter ou supprimer des colonnes de la ligne total
+  const nb_competences = ues.length;
+  const nb_colonnes_total = nb_competences + nb_colonnes_notes * 2;
+  const nb_colonnes_total_old = document.querySelectorAll(
+    "tbody > tr#total > td"
+  ).length;
+  let ligne_total = document.querySelector("tbody > tr#total");
+  let ligne_moy = document.querySelector("tbody > tr#moy");
+  if (nb_colonnes_total > nb_colonnes_total_old) {
+    for (let i = 0; i < nb_colonnes_total - nb_colonnes_total_old; i++) {
+      ligne_total.innerHTML += "<td></td>";
+      ligne_moy.innerHTML += "<td></td>";
+    }
+  } else if (nb_colonnes_total < nb_colonnes_total_old) {
+    for (let i = 0; i < nb_colonnes_total_old - nb_colonnes_total; i++) {
+      ligne_total.children[ligne_total.children.length - 1].remove();
+      ligne_moy.children[ligne_moy.children.length - 1].remove();
+    }
+  }
+  // Ajouter les colonnes de bonus
+  const nb_colonnes_moy_bonus_old = document.querySelectorAll(
+    "tbody > tr#moyBonus > td"
+  ).length;
+  if (nb_competences > nb_colonnes_moy_bonus_old) {
+    for (let i = 0; i < nb_competences - nb_colonnes_moy_bonus_old; i++) {
+      document.querySelector("tbody > tr#moyBonus").innerHTML += "<td></td>";
+    }
+  } else if (nb_competences < nb_colonnes_moy_bonus_old) {
+    for (let i = 0; i < nb_colonnes_moy_bonus_old - nb_competences; i++) {
+      document.querySelector("tbody > tr#moyBonus > td:last-child").remove();
     }
   }
 
