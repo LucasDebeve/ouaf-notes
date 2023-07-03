@@ -1,6 +1,12 @@
 // Vérifie le local storage pour récupérer les notes, coefs et ues
 const notes_json = JSON.parse(localStorage.getItem("notes"));
-if (notes_json) {
+if (
+  notes_json &&
+  notes_json.length === 3 &&
+  notes_json[0].length > 0 &&
+  notes_json[1].length > 0 &&
+  notes_json[2].length > 0
+) {
   display_notes(notes_json[0], notes_json[1], notes_json[2]);
 } else {
   const coefs = document.querySelectorAll(
@@ -403,43 +409,51 @@ async function get_notes() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  const notes_json = await fetchNotes(
-    "https://api-notes-dev.vercel.app/notes",
-    {
-      username: username,
-      password: password,
-    }
-  );
+  // https://api-notes-dev.vercel.app/notes
+  const notes_json = await fetchNotes("http://localhost:5000/notes", {
+    username: username,
+    password: password,
+  });
 
-  if (notes_json.error) {
+  console.log(notes_json);
+
+  if (!notes_json.ok) {
+    console.log(notes_json.err);
     loader.classList.add("hidden");
-    alert(notes_json.error);
+    alert(notes_json.err);
     return;
+  } else if (notes_json[0].length === 0) {
+    console.log("Aucune note trouvée");
+  } else {
+    // Mémoriser les notes, coefs et ues dans le local storage
+    localStorage.setItem("notes", JSON.stringify(notes_json));
+
+    display_notes(notes_json[0], notes_json[1], notes_json[2]);
+
+    loader.classList.add("hidden");
+
+    let formContainer = document.getElementById("formContainer");
+    formContainer.style.display = "none";
   }
-
-  // Mémoriser les notes, coefs et ues dans le local storage
-  localStorage.setItem("notes", JSON.stringify(notes_json));
-
-  display_notes(notes_json[0], notes_json[1], notes_json[2]);
-
-  loader.classList.add("hidden");
-
-  let formContainer = document.getElementById("formContainer");
-  formContainer.style.display = "none";
 }
 
 function display_notes(notes_obj, ues, coefs) {
   // Supprimer les entetes de UE
   const colonne_ues = document.querySelectorAll("thead > tr > th.ue");
-  for (let i = 0; i < colonne_ues.length; i++) {
-    colonne_ues[i].remove();
+
+  if (colonne_ues.length > 0) {
+    for (let i = 0; i < colonne_ues.length; i++) {
+      colonne_ues[i].remove();
+    }
   }
   // Supprimer toutes les lignes de matières
   const lignes_matieres = document.querySelectorAll(
     "tbody > tr:not(#moy, #moyBonus, #total)"
   );
-  for (let i = 0; i < lignes_matieres.length; i++) {
-    lignes_matieres[i].remove();
+  if (lignes_matieres.length > 0) {
+    for (let i = 0; i < lignes_matieres.length; i++) {
+      lignes_matieres[i].remove();
+    }
   }
   // Compter le nombre max de notes par matière
   let max_eval = 0;
