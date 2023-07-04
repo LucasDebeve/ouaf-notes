@@ -230,7 +230,8 @@ function moyenneBonus(competence_id) {
   const bonus = parseFloat(
     document.querySelector("#bonus > td:last-child").innerHTML
   );
-  const moyenneBonus = Math.round((moyenne + 0.5 * (bonus / 20)) * 1000) / 1000;
+  
+  const moyenneBonus = Math.min(Math.max(Math.round((moyenne + 0.5 * (bonus / 20)) * 1000) / 1000, 0), 20);
   const celluleMoyenne = document.querySelector(
     "#moyBonus > td:nth-child(" + competence_id + ")"
   );
