@@ -48,6 +48,7 @@ function calculTotalCoef(line_id) {
       total += parseFloat(coef[i].innerHTML);
     }
   }
+  // A changer
   if (total === 0) {
     total = 1;
   }
@@ -501,6 +502,7 @@ function display_notes(notes_obj, ues, coefs) {
   const nb_colonnes_total = nb_competences + nb_colonnes_notes * 2;
   document.querySelector("#total > #moyenneGenerale").remove();
   document.querySelector("#moy > td:last-child").remove();
+  document.querySelector("#total > .totalCoef").classList.remove("totalCoef");
   const nb_colonnes_total_old = document.querySelectorAll(
     "tbody > tr#total > td"
   ).length;
@@ -517,6 +519,7 @@ function display_notes(notes_obj, ues, coefs) {
       ligne_moy.children[ligne_moy.children.length - 1].remove();
     }
   }
+  document.querySelector("#total > td:nth-child(" + (nb_competences + 2) + ")").classList.add("totalCoef");
   document.querySelector("#total > td:last-child").id = "moyenneGenerale";
   // Ajouter les colonnes de bonus
   const nb_colonnes_moy_bonus_old = document.querySelectorAll(
