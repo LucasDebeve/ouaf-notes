@@ -83,8 +83,6 @@ function calculMoyenneMatiere(line_id) {
       occurences[0] +
       "):not(:last-child) > input"
   );
-  console.log("Liste de notes : (input)");
-  console.log(Notes);
   const coefs = document.querySelectorAll(
     "#" +
       line_id +
@@ -94,9 +92,6 @@ function calculMoyenneMatiere(line_id) {
       occurences[1] +
       "):not(:last-child) > input"
   );
-  console.log("Liste de coefs : (input)");
-  console.log(coefs);
-  console.log("-------------------------");
   // Somme des notes * coef
   let sommeNotesCoef = 0;
   let sommeCoef = 0;
@@ -265,10 +260,6 @@ function update() {
       (compterCompetences() + 1) +
       "):not(:first-child)"
   );
-  console.log("Liste de compétences : (th)");
-  console.log(competences);
-  console.log("Nombre de compétences : " + competences.length);
-  console.log("-------------------------");
 
   for (let i = 0; i < competences.length; i++) {
     totalCompetence(i + 2);
@@ -277,10 +268,6 @@ function update() {
   const lines = document.querySelectorAll(
     "table > tbody > tr:not(#moy, #moyBonus)"
   );
-  console.log("Liste de lignes : (tr)");
-  console.log(lines);
-  console.log("Nombre de lignes : " + lines.length);
-  console.log("-------------------------");
 
   let total = [];
   let moyenne = [];
@@ -523,8 +510,6 @@ function display_notes(notes_obj, ues, coefs) {
 
   // Ajouter la ligne des totaux et moyennes
   const nb_competences = ues.length;
-  console.log("Nombre de compétences : " + nb_competences)
-  console.log("Nb notes" + (compterColonnesNotes() * 2))
   const nb_colonnes_total = nb_competences + (compterColonnesNotes() * 2) + 2;
   let ligne_total = document.createElement("tr");
   let ligne_moy = document.createElement("tr");
