@@ -67,11 +67,14 @@ function calculMoyenneMatiere(line_id) {
       line_id +
       " td:nth-child(n+" + ue_count + "):nth-child(2n-1):not(:last-child) > input"
   );
+  console.log("Liste de notes : (input)");
   console.log(Notes);
   const coefs = document.querySelectorAll(
     "#" + line_id + " td:nth-child(n+" + ue_count + "):nth-child(2n):not(:last-child) > input"
   );
+  console.log("Liste de coefs : (input)");
   console.log(coefs);
+  console.log("-------------------------");
   // Somme des notes * coef
   let sommeNotesCoef = 0;
   let sommeCoef = 0;
@@ -151,8 +154,6 @@ function totalCompetence(competence_id) {
   for (let i = 0; i < lignes.length; i++) {
     const ligne = lignes[i];
     const ligne_id = ligne.id;
-    console.log("Ligne data : " + ligne_id + " - " + competence_id)
-    console.log("Ligne : " + ligne)
     const cellule = document.querySelector(
       "#" + ligne_id + " > td:nth-child(" + competence_id + ")"
     );
@@ -241,7 +242,10 @@ function update() {
       (compterCompetences() + 1) +
       "):not(:first-child)"
   );
-  console.log("Liste de compétences : (th)" + competences);
+  console.log("Liste de compétences : (th)");
+  console.log(competences);
+  console.log("Nombre de compétences : " + competences.length);
+  console.log("-------------------------");
 
   for (let i = 0; i < competences.length; i++) {
     totalCompetence(i + 2);
@@ -250,7 +254,10 @@ function update() {
   const lines = document.querySelectorAll(
     "table > tbody > tr:not(#moy, #moyBonus)"
   );
-  console.log("Liste de lignes : (tr)" + lines);
+  console.log("Liste de lignes : (tr)");
+  console.log(lines);
+  console.log("Nombre de lignes : " + lines.length);
+  console.log("-------------------------");
 
   let total = [];
   let moyenne = [];
