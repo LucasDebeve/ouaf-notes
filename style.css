@@ -6,6 +6,7 @@
 
   --success-color: #c5ffd2;
   --danger-color: #ffcdd2;
+  --neutral-color: #ffefcd;
 }
 
 * {
@@ -275,6 +276,18 @@ tbody > tr > th {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  padding: 0.5rem 0.8rem;
+}
+tbody > tr > th > input {
+  margin-right: 0.5rem;
+  accent-color: var(--fourth-color);
+  width: 1rem;
+  height: 0.9rem;
+  vertical-align: middle;
+}
+
+tbody > tr.option {
+  color: var(--fourth-color);
 }
 
 tbody > tr:nth-child(odd) > td {
@@ -308,6 +321,10 @@ tr > .good {
 
 tr > .bad {
   background-color: var(--danger-color) !important;
+}
+
+tr > .neutral {
+  background-color: var(--neutral-color) !important;
 }
 
 #moyBonus > td {

@@ -11,13 +11,13 @@ if (
 } else {
   ue_count = document.querySelectorAll("th.ue").length;
   const coefs = document.querySelectorAll(
-    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+" +
+    "tbody > tr:not(#moy, #moyBonus, #total, .option) > td:nth-child(n+" +
       ue_count +
       3 +
       "):nth-child(2n):not(:last-child)"
   );
   const notes = document.querySelectorAll(
-    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+" +
+    "tbody > tr:not(#moy, #moyBonus, #total, .option) > td:nth-child(n+" +
       ue_count +
       3 +
       "):nth-child(2n-1):not(:last-child)"
@@ -165,7 +165,7 @@ function moyenneIntranet(moyennesMatieres) {
  */
 function totalCompetence(competence_id) {
   const lignes = document.querySelectorAll(
-    "table > tbody > tr:not(#moy, #moyBonus, #total)"
+    "table > tbody > tr:not(#moy, #moyBonus, #total, .option)"
   );
   let total = 0;
   for (let i = 0; i < lignes.length; i++) {
@@ -190,7 +190,7 @@ function totalCompetence(competence_id) {
  */
 function moyenneCompetence(competence_id) {
   const lignes = document.querySelectorAll(
-    "table > tbody > tr:not(#moy, #moyBonus, #total)"
+    "table > tbody > tr:not(#moy, #moyBonus, #total, .option)"
   );
   let somme = 0;
   for (let i = 0; i < lignes.length; i++) {
@@ -222,22 +222,40 @@ function moyenneBonus(competence_id) {
     document.querySelector("#moy > td:nth-child(" + competence_id + ")")
       .innerHTML
   );
-  const bonus = parseFloat(
-    document.querySelector("#bonus > td:last-child").innerHTML
+  const bonus =
+    document.querySelector("#bonus").classList[0] !== "option"
+      ? parseFloat(document.querySelector("#bonus > td:last-child").innerHTML)
+      : 0;
+
+  const moyenneBonus = Math.min(
+    Math.max(Math.round((moyenne + 0.5 * (bonus / 20)) * 1000) / 1000, 0),
+    20
   );
-  
-  const moyenneBonus = Math.min(Math.max(Math.round((moyenne + 0.5 * (bonus / 20)) * 1000) / 1000, 0), 20);
   const celluleMoyenne = document.querySelector(
     "#moyBonus > td:nth-child(" + competence_id + ")"
   );
   celluleMoyenne.innerHTML = moyenneBonus;
 
-  if (moyenneBonus >= 10) {
+  if (
+    moyenneBonus >= 10 &&
+    document.querySelector("#total > td:nth-child(" + competence_id + ")")
+      .innerHTML !== "0"
+  ) {
     celluleMoyenne.classList.add("good");
     celluleMoyenne.classList.remove("bad");
-  } else {
+    celluleMoyenne.classList.remove("neutral");
+  } else if (
+    moyenneBonus < 10 &&
+    document.querySelector("#total > td:nth-child(" + competence_id + ")")
+      .innerHTML !== "0"
+  ) {
     celluleMoyenne.classList.remove("good");
     celluleMoyenne.classList.add("bad");
+    celluleMoyenne.classList.remove("neutral");
+  } else {
+    celluleMoyenne.classList.remove("good");
+    celluleMoyenne.classList.remove("bad");
+    celluleMoyenne.classList.add("neutral");
   }
 }
 
@@ -256,7 +274,7 @@ function compterCompetences() {
 function update() {
   // Parcours des colonnes des compétences
   const competences = document.querySelectorAll(
-    "table > thead > tr > th:nth-child(-n+" +
+    "table > thead > tr:not(.option) > th:nth-child(-n+" +
       (compterCompetences() + 1) +
       "):not(:first-child)"
   );
@@ -266,7 +284,7 @@ function update() {
   }
   // Parcours de l'ensemble des lignes du tableau
   const lines = document.querySelectorAll(
-    "table > tbody > tr:not(#moy, #moyBonus)"
+    "table > tbody > tr:not(#moy, #moyBonus, .option)"
   );
 
   let total = [];
@@ -287,6 +305,17 @@ function update() {
     moyenneCompetence(i + 2);
     moyenneBonus(i + 2);
   }
+  document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      // Get checkbox parent row
+      const ligne = checkbox.parentNode.parentNode;
+      if (checkbox.checked) {
+        ligne.classList.remove("option");
+      } else {
+        ligne.classList.add("option");
+      }
+    });
+  });
 }
 
 /**
@@ -510,7 +539,7 @@ function display_notes(notes_obj, ues, coefs) {
 
   // Ajouter la ligne des totaux et moyennes
   const nb_competences = ues.length;
-  const nb_colonnes_total = nb_competences + (compterColonnesNotes() * 2) + 2;
+  const nb_colonnes_total = nb_competences + compterColonnesNotes() * 2 + 2;
   let ligne_total = document.createElement("tr");
   let ligne_moy = document.createElement("tr");
   ligne_total.id = "total";
@@ -546,7 +575,12 @@ function display_notes(notes_obj, ues, coefs) {
       // Remplacer les caractères spéciaux par des _
       ligne_matiere.id = notes_obj[i].matiere.replace(/[^a-zA-Z0-9]/g, "_");
     }
-    ligne_matiere.innerHTML = "<th>" + notes_obj[i].matiere + "</th>";
+    ligne_matiere.innerHTML =
+      "<th><input id='" +
+      i +
+      "' type='checkbox' checked/>" +
+      notes_obj[i].matiere +
+      "</th>";
     // Colonnes des coefficients
     for (let j = 0; j < ues.length; j++) {
       let w = 0;
