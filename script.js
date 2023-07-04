@@ -43,7 +43,7 @@ function calculTotalCoef(line_id) {
   const coef = document.querySelectorAll(
     "#" + line_id + " > td:nth-child(-n+" + (compterCompetences() + 1) + ")"
   );
-  for (var i = 0; i < coef.length; i++) {
+  for (let i = 0; i < coef.length; i++) {
     if (coef[i].innerHTML !== "") {
       total += parseFloat(coef[i].innerHTML);
     }
@@ -65,7 +65,7 @@ function calculMoyenneMatiere(line_id) {
   // Si le nombre de competences est paire, il faut ajouter 1 pour avoir le bon nombre de colonnes
   const occurences = ["2n-1", "2n"];
   if (ue_count % 2 !== 0) {
-    occurences = ["2n", "2n-1"];
+    occurences.reverse();
   }
   const Notes = document.querySelectorAll(
     "#" +
@@ -499,6 +499,8 @@ function display_notes(notes_obj, ues, coefs) {
   // Ajouter ou supprimer des colonnes de la ligne total
   const nb_competences = ues.length;
   const nb_colonnes_total = nb_competences + nb_colonnes_notes * 2;
+  document.querySelector("#total > #moyenneGenerale").remove();
+  document.querySelector("#moy > td:last-child").remove();
   const nb_colonnes_total_old = document.querySelectorAll(
     "tbody > tr#total > td"
   ).length;
@@ -515,6 +517,7 @@ function display_notes(notes_obj, ues, coefs) {
       ligne_moy.children[ligne_moy.children.length - 1].remove();
     }
   }
+  document.querySelector("#total > td:last-child").id = "moyenneGenerale";
   // Ajouter les colonnes de bonus
   const nb_colonnes_moy_bonus_old = document.querySelectorAll(
     "tbody > tr#moyBonus > td"
