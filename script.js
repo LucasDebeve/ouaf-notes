@@ -11,10 +11,16 @@ if (
 } else {
   ue_count = document.querySelectorAll("th.ue").length;
   const coefs = document.querySelectorAll(
-    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+" + ue_count + 3 + "):nth-child(2n):not(:last-child)"
+    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+" +
+      ue_count +
+      3 +
+      "):nth-child(2n):not(:last-child)"
   );
   const notes = document.querySelectorAll(
-    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+" + ue_count + 3 + "):nth-child(2n-1):not(:last-child)"
+    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+" +
+      ue_count +
+      3 +
+      "):nth-child(2n-1):not(:last-child)"
   );
 
   coefs.forEach((coef) => {
@@ -62,7 +68,7 @@ function calculTotalCoef(line_id) {
  * @returns la moyenne de la matière
  */
 function calculMoyenneMatiere(line_id) {
-  const ue_count =  compterCompetences();
+  const ue_count = compterCompetences();
   // Si le nombre de competences est paire, il faut ajouter 1 pour avoir le bon nombre de colonnes
   const occurences = ["2n-1", "2n"];
   if (ue_count % 2 !== 0) {
@@ -71,12 +77,22 @@ function calculMoyenneMatiere(line_id) {
   const Notes = document.querySelectorAll(
     "#" +
       line_id +
-      " td:nth-child(n+" + ue_count + "):nth-child(" + occurences[0] + "):not(:last-child) > input"
+      " td:nth-child(n+" +
+      ue_count +
+      "):nth-child(" +
+      occurences[0] +
+      "):not(:last-child) > input"
   );
   console.log("Liste de notes : (input)");
   console.log(Notes);
   const coefs = document.querySelectorAll(
-    "#" + line_id + " td:nth-child(n+" + ue_count + "):nth-child(" + occurences[1] + "):not(:last-child) > input"
+    "#" +
+      line_id +
+      " td:nth-child(n+" +
+      ue_count +
+      "):nth-child(" +
+      occurences[1] +
+      "):not(:last-child) > input"
   );
   console.log("Liste de coefs : (input)");
   console.log(coefs);
@@ -467,12 +483,10 @@ function display_notes(notes_obj, ues, coefs) {
     }
   }
   // Supprimer toutes les lignes de matières
-  const lignes_matieres = document.querySelectorAll(
-    "tbody > tr:not(#moy, #moyBonus, #total)"
-  );
-  if (lignes_matieres.length > 0) {
-    for (let i = 0; i < lignes_matieres.length; i++) {
-      lignes_matieres[i].remove();
+  const all_lignes = document.querySelectorAll("tbody > tr");
+  if (all_lignes.length > 0) {
+    for (let i = 0; i < all_lignes.length; i++) {
+      all_lignes[i].remove();
     }
   }
 
@@ -497,44 +511,6 @@ function display_notes(notes_obj, ues, coefs) {
     }
   }
 
-  // Ajouter ou supprimer des colonnes de la ligne total
-  const nb_competences = ues.length;
-  const nb_colonnes_total = nb_competences + nb_colonnes_notes * 2;
-  document.querySelector("#total > #moyenneGenerale").remove();
-  document.querySelector("#moy > td:last-child").remove();
-  document.querySelector("#total > .totalCoef").classList.remove("totalCoef");
-  const nb_colonnes_total_old = document.querySelectorAll(
-    "tbody > tr#total > td"
-  ).length;
-  let ligne_total = document.querySelector("tbody > tr#total");
-  let ligne_moy = document.querySelector("tbody > tr#moy");
-  if (nb_colonnes_total > nb_colonnes_total_old) {
-    for (let i = 0; i < nb_colonnes_total - nb_colonnes_total_old; i++) {
-      ligne_total.innerHTML += "<td></td>";
-      ligne_moy.innerHTML += "<td></td>";
-    }
-  } else if (nb_colonnes_total < nb_colonnes_total_old) {
-    for (let i = 0; i < nb_colonnes_total_old - nb_colonnes_total; i++) {
-      ligne_total.children[ligne_total.children.length - 1].remove();
-      ligne_moy.children[ligne_moy.children.length - 1].remove();
-    }
-  }
-  document.querySelector("#total > td:nth-child(" + (nb_competences + 2) + ")").classList.add("totalCoef");
-  document.querySelector("#total > td:last-child").id = "moyenneGenerale";
-  // Ajouter les colonnes de bonus
-  const nb_colonnes_moy_bonus_old = document.querySelectorAll(
-    "tbody > tr#moyBonus > td"
-  ).length;
-  if (nb_competences > nb_colonnes_moy_bonus_old) {
-    for (let i = 0; i < nb_competences - nb_colonnes_moy_bonus_old; i++) {
-      document.querySelector("tbody > tr#moyBonus").innerHTML += "<td></td>";
-    }
-  } else if (nb_competences < nb_colonnes_moy_bonus_old) {
-    for (let i = 0; i < nb_colonnes_moy_bonus_old - nb_competences; i++) {
-      document.querySelector("tbody > tr#moyBonus > td:last-child").remove();
-    }
-  }
-
   // Ajouter les entetes de UE
   for (let i = 0; i < ues.length; i++) {
     let entete_ue = document.createElement("th");
@@ -544,6 +520,37 @@ function display_notes(notes_obj, ues, coefs) {
     entete_total.insertAdjacentElement("beforebegin", entete_ue);
   }
 
+  // Ajouter la ligne des totaux et moyennes
+  const nb_competences = ues.length;
+  console.log("Nombre de compétences : " + nb_competences)
+  console.log("Nb notes" + (compterColonnesNotes() * 2))
+  const nb_colonnes_total = nb_competences + (compterColonnesNotes() * 2) + 2;
+  let ligne_total = document.createElement("tr");
+  let ligne_moy = document.createElement("tr");
+  ligne_total.id = "total";
+  ligne_moy.id = "moy";
+  ligne_total.innerHTML = "<th>Total</th>";
+  ligne_moy.innerHTML = "<th>Moyenne</th>";
+  for (let i = 0; i < nb_colonnes_total; i++) {
+    if (i === nb_competences) {
+      ligne_total.innerHTML += "<td class='totalCoef'></td>";
+    } else {
+      ligne_total.innerHTML += "<td></td>";
+    }
+    ligne_moy.innerHTML += "<td></td>";
+  }
+  ligne_total.lastChild.id = "moyenneGenerale";
+  document.querySelector("table tbody").appendChild(ligne_total);
+  document.querySelector("table tbody").appendChild(ligne_moy);
+  // Ajouter les colonnes de bonus
+  let ligne_moy_bonus = document.createElement("tr");
+  ligne_moy_bonus.innerHTML = "<th>+ Bonus</th>";
+  for (let i = 0; i < nb_competences; i++) {
+    ligne_moy_bonus.innerHTML += "<td></td>";
+  }
+  ligne_moy_bonus.id = "moyBonus";
+  document.querySelector("table tbody").appendChild(ligne_moy_bonus);
+
   // Ajouter les lignes de matières
   for (let i = 0; i < notes_obj.length; i++) {
     let ligne_matiere = document.createElement("tr");
@@ -551,8 +558,7 @@ function display_notes(notes_obj, ues, coefs) {
       ligne_matiere.id = "bonus";
     } else {
       // Remplacer les caractères spéciaux par des _
-      ligne_matiere.id = notes_obj[i].matiere
-        .replace(/[^a-zA-Z0-9]/g, "_")
+      ligne_matiere.id = notes_obj[i].matiere.replace(/[^a-zA-Z0-9]/g, "_");
     }
     ligne_matiere.innerHTML = "<th>" + notes_obj[i].matiere + "</th>";
     // Colonnes des coefficients
@@ -617,6 +623,7 @@ function display_notes(notes_obj, ues, coefs) {
     const ligne_moyenne = document.querySelector("#total");
     ligne_moyenne.insertAdjacentElement("beforebegin", ligne_matiere);
   }
+
   update();
 }
 
