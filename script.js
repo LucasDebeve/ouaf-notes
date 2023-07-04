@@ -539,10 +539,9 @@ function display_notes(notes_obj, ues, coefs) {
     if (notes_obj[i].matiere.includes("Bonification")) {
       ligne_matiere.id = "bonus";
     } else {
+      // Remplacer les caractères spéciaux par des _
       ligne_matiere.id = notes_obj[i].matiere
-        .replace(" ", "_")
-        .replace("'", "_")
-        .replace(".", "_");
+        .replace(/[^a-zA-Z0-9]/g, "_")
     }
     ligne_matiere.innerHTML = "<th>" + notes_obj[i].matiere + "</th>";
     // Colonnes des coefficients
