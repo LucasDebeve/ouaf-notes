@@ -147,11 +147,12 @@ function totalCompetence(competence_id) {
   const lignes = document.querySelectorAll(
     "table > tbody > tr:not(#moy, #moyBonus, #total)"
   );
-  console.log("lignes : " + lignes);
   let total = 0;
   for (let i = 0; i < lignes.length; i++) {
     const ligne = lignes[i];
     const ligne_id = ligne.id;
+    console.log("Ligne data : " + ligne_id + " - " + competence_id)
+    console.log("Ligne : " + ligne)
     const cellule = document.querySelector(
       "#" + ligne_id + " > td:nth-child(" + competence_id + ")"
     );
