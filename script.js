@@ -62,15 +62,20 @@ function calculTotalCoef(line_id) {
  */
 function calculMoyenneMatiere(line_id) {
   const ue_count =  compterCompetences();
+  // Si le nombre de competences est paire, il faut ajouter 1 pour avoir le bon nombre de colonnes
+  const occurences = ["2n-1", "2n"];
+  if (ue_count % 2 !== 0) {
+    occurences = ["2n", "2n-1"];
+  }
   const Notes = document.querySelectorAll(
     "#" +
       line_id +
-      " td:nth-child(n+" + ue_count + "):nth-child(2n-1):not(:last-child) > input"
+      " td:nth-child(n+" + ue_count + "):nth-child(" + occurences[0] + "):not(:last-child) > input"
   );
   console.log("Liste de notes : (input)");
   console.log(Notes);
   const coefs = document.querySelectorAll(
-    "#" + line_id + " td:nth-child(n+" + ue_count + "):nth-child(2n):not(:last-child) > input"
+    "#" + line_id + " td:nth-child(n+" + ue_count + "):nth-child(" + occurences[1] + "):not(:last-child) > input"
   );
   console.log("Liste de coefs : (input)");
   console.log(coefs);
