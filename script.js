@@ -9,11 +9,12 @@ if (
 ) {
   display_notes(notes_json[0], notes_json[1], notes_json[2]);
 } else {
+  ue_count = document.querySelectorAll("th.ue").length;
   const coefs = document.querySelectorAll(
-    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+9):nth-child(2n):not(:last-child)"
+    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+" + ue_count + 3 + "):nth-child(2n):not(:last-child)"
   );
   const notes = document.querySelectorAll(
-    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+9):nth-child(2n-1):not(:last-child)"
+    "tbody > tr:not(#moy, #moyBonus, #total) > td:nth-child(n+" + ue_count + 3 + "):nth-child(2n-1):not(:last-child)"
   );
 
   coefs.forEach((coef) => {
@@ -28,6 +29,8 @@ if (
       note.innerHTML.replace(",", ".") +
       "' min='0' max='20' step='0.01'>";
   });
+  let formContainer = document.getElementById("formContainer");
+  formContainer.style.display = "flex";
 }
 
 /**
@@ -58,14 +61,17 @@ function calculTotalCoef(line_id) {
  * @returns la moyenne de la matière
  */
 function calculMoyenneMatiere(line_id) {
+  const ue_count =  compterCompetences();
   const Notes = document.querySelectorAll(
     "#" +
       line_id +
-      " td:nth-child(n+9):nth-child(2n-1):not(:last-child) > input"
+      " td:nth-child(n+" + ue_count + "):nth-child(2n-1):not(:last-child) > input"
   );
+  console.log(Notes);
   const coefs = document.querySelectorAll(
-    "#" + line_id + " td:nth-child(n+9):nth-child(2n):not(:last-child) > input"
+    "#" + line_id + " td:nth-child(n+" + ue_count + "):nth-child(2n):not(:last-child) > input"
   );
+  console.log(coefs);
   // Somme des notes * coef
   let sommeNotesCoef = 0;
   let sommeCoef = 0;
@@ -233,15 +239,16 @@ function update() {
       (compterCompetences() + 1) +
       "):not(:first-child)"
   );
+  console.log("Liste de compétences : (th)" + competences);
 
   for (let i = 0; i < competences.length; i++) {
-    const competence = competences[i];
     totalCompetence(i + 2);
   }
   // Parcours de l'ensemble des lignes du tableau
   const lines = document.querySelectorAll(
     "table > tbody > tr:not(#moy, #moyBonus)"
   );
+  console.log("Liste de lignes : (tr)" + lines);
 
   let total = [];
   let moyenne = [];
@@ -252,14 +259,12 @@ function update() {
     total.push(calculTotalCoef(line_id));
     if (line_id !== "total") moyenne.push(calculMoyenneMatiere(line_id));
   }
-
   moyenneTotale(total.slice(0, total.length - 1), moyenne);
   moyenneIntranet(moyenne);
 
   // Calcul de la moyenne par competence
 
   for (let i = 0; i < competences.length; i++) {
-    const competence = competences[i];
     moyenneCompetence(i + 2);
     moyenneBonus(i + 2);
   }
