@@ -195,7 +195,7 @@ function moyenneCompetence(competence_id) {
       somme += coef * moyenne;
     }
   }
-  const moyenne = somme / totalCompetence(competence_id);
+  const moyenne = somme !== 0 ? somme / totalCompetence(competence_id) : 0;
   document.querySelector(
     "#moy > td:nth-child(" + competence_id + ")"
   ).innerHTML = Math.round(moyenne * 1000) / 1000;
