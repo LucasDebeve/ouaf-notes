@@ -147,6 +147,7 @@ function totalCompetence(competence_id) {
   const lignes = document.querySelectorAll(
     "table > tbody > tr:not(#moy, #moyBonus, #total)"
   );
+  console.log("lignes : " + lignes);
   let total = 0;
   for (let i = 0; i < lignes.length; i++) {
     const ligne = lignes[i];
