@@ -11,21 +11,6 @@
   --neutral-color: #ffefcd;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-color: #1f1f1f;
-    --secondary-color: #333;
-    --tertiary-color: #444;
-    --fourth-color: #555;
-    --header-color: #fff;
-    --text-color: var(--header-color);
-
-    --success-color: #1b5e20;
-    --danger-color: #b71c1c;
-    --neutral-color: #f57f17;
-  }
-}
-
 * {
   margin: 0;
   padding: 0;
