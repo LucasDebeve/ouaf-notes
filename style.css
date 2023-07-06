@@ -46,7 +46,7 @@ html[data-theme="dark"] {
   --danger-color: #b71c1c;
   --neutral-color: #f57f17;
 }
-html[data-theme="dark"] {
+html[data-theme="light"] {
   --primary-color: #333;
   --secondary-color: #fff;
   --tertiary-color: #eee;
