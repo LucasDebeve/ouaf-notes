@@ -46,7 +46,18 @@ html[data-theme="dark"] {
   --danger-color: #b71c1c;
   --neutral-color: #f57f17;
 }
+html[data-theme="dark"] {
+  --primary-color: #333;
+  --secondary-color: #fff;
+  --tertiary-color: #eee;
+  --fourth-color: #ccc;
+  --header-color: #fff;
+  --text-color: #333;
 
+  --success-color: #c5ffd2;
+  --danger-color: #ffcdd2;
+  --neutral-color: #ffefcd;
+}
 
 
 html,
