@@ -3,10 +3,27 @@
   --secondary-color: #fff;
   --tertiary-color: #eee;
   --fourth-color: #ccc;
+  --header-color: #fff;
+  --text-color: #333;
 
   --success-color: #c5ffd2;
   --danger-color: #ffcdd2;
   --neutral-color: #ffefcd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #1f1f1f;
+    --secondary-color: #333;
+    --tertiary-color: #444;
+    --fourth-color: #555;
+    --header-color: #fff;
+    --text-color: var(--header-color);
+
+    --success-color: #1b5e20;
+    --danger-color: #b71c1c;
+    --neutral-color: #f57f17;
+  }
 }
 
 * {
@@ -35,7 +52,7 @@ body {
 header {
   flex: 0 0 60px;
   background-color: var(--primary-color);
-  color: var(--secondary-color);
+  color: var(--header-color);
 
   display: flex;
   flex-direction: column;
@@ -72,7 +89,7 @@ button {
   border: none;
   border-radius: 0.2rem;
   background-color: var(--secondary-color);
-  color: var(--primary-color);
+  color: var(--text-color);
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
@@ -107,7 +124,7 @@ header > button {
 
 .form > p,
 .form a {
-  color: var(--fourth-color);
+  color: var(--header-color);
   font-size: 1.1rem;
   text-align: justify;
 }
@@ -163,7 +180,7 @@ header > button {
   border: none;
   outline: none;
   cursor: pointer;
-  color: var(--secondary-color);
+  color: var(--header-color);
   font-size: 1.5rem;
 }
 
@@ -177,14 +194,14 @@ header > button {
   border-bottom: 1px solid var(--fourth-color);
   background-color: transparent;
   outline: none;
-  color: var(--secondary-color);
+  color: var(--header-color);
   font-size: 1.2rem;
 }
 .field-holder label {
   position: absolute;
   top: 0;
   left: 0;
-  color: var(--tertiary-color);
+  color: var(--header-color);
 }
 header input,
 header label {
@@ -207,7 +224,7 @@ header input:valid + label {
 
 header input:focus,
 header input:valid {
-  border-bottom: 1px solid var(--secondary-color);
+  border-bottom: 1px solid var(--header-color);
 }
 
 /*---MAIN---*/
@@ -231,7 +248,7 @@ table > * > * > *:not(:has(> input)) {
 
 thead {
   background-color: var(--primary-color);
-  color: var(--secondary-color);
+  color: var(--header-color);
 }
 
 thead tr th {
@@ -239,6 +256,7 @@ thead tr th {
 }
 
 tbody > tr > td {
+  color: var(--text-color);
   border: 1px solid var(--fourth-color);
   padding: 0.5rem 0.8rem;
 }
@@ -254,7 +272,7 @@ td > input {
 }
 
 td > input:focus {
-  color: var(--primary-color);
+  color: var(--text-color);
 }
 
 input::-webkit-outer-spin-button,
@@ -270,7 +288,7 @@ input[type="number"] {
 
 tbody > tr > th {
   background-color: var(--primary-color);
-  color: var(--secondary-color);
+  color: var(--header-color);
   text-align: left;
   border: var(--fourth-color) 1px solid;
   text-overflow: ellipsis;
