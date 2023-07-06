@@ -31,7 +31,23 @@
   padding: 0;
   box-sizing: border-box;
   border-collapse: collapse;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
+
+html[data-theme="dark"] {
+  --primary-color: #1f1f1f;
+  --secondary-color: #333;
+  --tertiary-color: #444;
+  --fourth-color: #555;
+  --header-color: #fff;
+  --text-color: var(--header-color);
+
+  --success-color: #1b5e20;
+  --danger-color: #b71c1c;
+  --neutral-color: #f57f17;
+}
+
+
 
 html,
 body {
@@ -82,6 +98,81 @@ header h1 {
   font-weight: 50;
   margin-left: 0.5rem;
 }
+
+header .menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Toggle */
+
+.toggle-switch {
+  position: relative;
+  width: 5rem;
+  height: 2rem;
+  margin: 1rem;
+  --light: #d8dbe0;
+  --dark: #28292c;
+  --link: rgb(27, 129, 112);
+  --link-hover: rgb(24, 94, 82);
+}
+
+.switch-label {
+  position: absolute;
+  width: 100%;
+  height: 2rem;
+  background-color: var(--dark);
+  border-radius: 1rem;
+  cursor: pointer;
+  border: 3px solid var(--dark);
+}
+
+.checkbox {
+  position: absolute;
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.checkbox:checked ~ .slider {
+  background-color: var(--light);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  top: 0.25rem;
+  left: 1px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  -webkit-box-shadow: inset 0.4rem -0.1rem 0px 0px var(--light);
+  box-shadow: inset 0.4rem -0.1rem 0px 0px var(--light);
+  background-color: var(--dark);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.checkbox:checked ~ .slider::before {
+  -webkit-transform: translateX(3rem);
+  -ms-transform: translateX(3rem);
+  transform: translateX(3rem);
+  background-color: var(--dark);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/* */
 
 button {
   width: 100%;
@@ -303,7 +394,8 @@ tbody > tr > th > input {
   vertical-align: middle;
 }
 
-tbody > tr.option > td, tbody > tr.option > td > input {
+tbody > tr.option > td,
+tbody > tr.option > td > input {
   color: var(--fourth-color) !important;
 }
 
@@ -377,7 +469,13 @@ footer button {
     padding: 1rem 2rem;
   }
 
-  header > button {
+  header > .menu {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  header button {
     width: auto;
   }
 }
@@ -407,6 +505,12 @@ footer button {
 
   .print-visible tr > .bad {
     background-color: var(--danger-color) !important;
+  }
+}
+
+@media (pointer: coarse) {
+  .toggle-switch {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 

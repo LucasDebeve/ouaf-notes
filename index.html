@@ -21,27 +21,35 @@
       <h1>OuafNotes</h1>
     </div>
 
-    <button id="showFormButton">Se connecter</button>
-    <div id="formContainer" style="display: none;">
-      <div class="form">
-        <img src="static/img/logo_urca1.png" alt="iut-reims">
-        <p>Vos données sont utilisées uniquement pour remplir le tableau de simulation. Aucun enregistrement ou
-          exploitation supplémentaire n'est effectué. Votre confidentialité est notre priorité.<br><a
-            href="https://github.com/LucasDebeve/ouaf-notes">Code source du site</a></p>
-        <button id="CloseFormButton">X</button>
-        <div class="field-holder">
-          <input type="text" id="username" name="username" required>
-          <label for="username">Login</label>
-        </div>
-        <div class="field-holder">
-          <input type="password" id="password" name="password" required>
-          <label for="password">Mot de passe</label>
-        </div>
-        <button onclick="get_notes()"><span class="material-symbols-outlined">
-            send
-          </span></button>
-        <div class="loader-container hidden">
-          <div class="loader"></div>
+    <div class="menu">
+      <div class="toggle-switch">
+        <label class="switch-label">
+          <input type="checkbox" id="darkMode" class="checkbox" onchange="changeColorTheme()">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <button id="showFormButton">Se connecter</button>
+      <div id="formContainer" style="display: none;">
+        <div class="form">
+          <img src="static/img/logo_urca1.png" alt="iut-reims">
+          <p>Vos données sont utilisées uniquement pour remplir le tableau de simulation. Aucun enregistrement ou
+            exploitation supplémentaire n'est effectué. Votre confidentialité est notre priorité.<br><a
+              href="https://github.com/LucasDebeve/ouaf-notes">Code source du site</a></p>
+          <button id="CloseFormButton">X</button>
+          <div class="field-holder">
+            <input type="text" id="username" name="username" required>
+            <label for="username">Login</label>
+          </div>
+          <div class="field-holder">
+            <input type="password" id="password" name="password" required>
+            <label for="password">Mot de passe</label>
+          </div>
+          <button onclick="get_notes()"><span class="material-symbols-outlined">
+              send
+            </span></button>
+          <div class="loader-container hidden">
+            <div class="loader"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -553,7 +561,8 @@
       </span></button>
 
   </footer>
-  
+
 </body>
 <script src="script.js"></script>
+
 </html>

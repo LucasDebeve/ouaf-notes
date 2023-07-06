@@ -1,3 +1,21 @@
+// Verifie le color scheme du navigateur
+const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+if (userPrefersDark) {
+  document.getElementById("darkMode").checked = false;
+  document.documentElement.setAttribute('data-theme', 'dark');
+} else {
+  document.getElementById("darkMode").checked = true;
+  document.documentElement.setAttribute('data-theme', 'light');
+}
+
+function changeColorTheme() {
+  if (document.getElementById("darkMode").checked) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+}
+
 // Vérifie le local storage pour récupérer les notes, coefs et ues
 const notes_json = JSON.parse(localStorage.getItem("notes"));
 if (
@@ -305,7 +323,7 @@ function update() {
     moyenneCompetence(i + 2);
     moyenneBonus(i + 2);
   }
-  document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+  document.querySelectorAll("main input[type='checkbox']").forEach((checkbox) => {
     checkbox.addEventListener("change", function () {
       // Get checkbox parent row
       const ligne = checkbox.parentNode.parentNode;
