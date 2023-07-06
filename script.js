@@ -8,6 +8,9 @@ if (userPrefersDark) {
   document.documentElement.setAttribute('data-theme', 'light');
 }
 
+/**
+ * Change le color scheme du navigateur
+ */
 function changeColorTheme() {
   if (document.getElementById("darkMode").checked) {
     document.documentElement.setAttribute('data-theme', 'light');
