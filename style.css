@@ -304,8 +304,8 @@ tbody > tr > th > input {
   vertical-align: middle;
 }
 
-tbody > tr.option {
-  color: var(--fourth-color);
+tbody > tr.option > td, tbody > tr.option > td > input {
+  color: var(--fourth-color) !important;
 }
 
 tbody > tr:nth-child(odd) > td {
