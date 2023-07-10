@@ -1,11 +1,13 @@
 // Verifie le color scheme du navigateur
-const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+const userPrefersDark =
+  window.matchMedia &&
+  window.matchMedia("(prefers-color-scheme: dark)").matches;
 if (userPrefersDark) {
   document.getElementById("darkMode").checked = false;
-  document.documentElement.setAttribute('data-theme', 'dark');
+  document.documentElement.setAttribute("data-theme", "dark");
 } else {
   document.getElementById("darkMode").checked = true;
-  document.documentElement.setAttribute('data-theme', 'light');
+  document.documentElement.setAttribute("data-theme", "light");
 }
 
 /**
@@ -13,9 +15,9 @@ if (userPrefersDark) {
  */
 function changeColorTheme() {
   if (document.getElementById("darkMode").checked) {
-    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.setAttribute("data-theme", "light");
   } else {
-    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.setAttribute("data-theme", "dark");
   }
 }
 
@@ -113,6 +115,15 @@ function calculMoyenneMatiere(line_id) {
       occurences[1] +
       "):not(:last-child) > input"
   );
+  const notes_vides = Array.from(Notes).filter((note) => note.value === "");
+  if (notes_vides.length === Notes.length) {
+    console.log(line_id + " vide");
+    document.querySelector(
+      "#" + line_id + " input[type=checkbox]"
+    ).checked = false;
+    document.querySelector("#" + line_id).classList.add("option");
+    return 0;
+  }
   // Somme des notes * coef
   let sommeNotesCoef = 0;
   let sommeCoef = 0;
@@ -314,6 +325,8 @@ function update() {
     const line = lines[i];
     const line_id = line.id;
 
+    // Si une ligne de notes est vide
+
     total.push(calculTotalCoef(line_id));
     if (line_id !== "total") moyenne.push(calculMoyenneMatiere(line_id));
   }
@@ -326,17 +339,19 @@ function update() {
     moyenneCompetence(i + 2);
     moyenneBonus(i + 2);
   }
-  document.querySelectorAll("main input[type='checkbox']").forEach((checkbox) => {
-    checkbox.addEventListener("change", function () {
-      // Get checkbox parent row
-      const ligne = checkbox.parentNode.parentNode;
-      if (checkbox.checked) {
-        ligne.classList.remove("option");
-      } else {
-        ligne.classList.add("option");
-      }
+  document
+    .querySelectorAll("main input[type='checkbox']")
+    .forEach((checkbox) => {
+      checkbox.addEventListener("change", function () {
+        // Get checkbox parent row
+        const ligne = checkbox.parentNode.parentNode;
+        if (checkbox.checked) {
+          ligne.classList.remove("option");
+        } else {
+          ligne.classList.add("option");
+        }
+      });
     });
-  });
 }
 
 /**
@@ -626,12 +641,11 @@ function display_notes(notes_obj, ues, coefs) {
     ligne_matiere.innerHTML += "<td class='totalCoef'></td>";
     // Si aucune note n'est renseignée, ajouter une colonne note=0 et coef=1 puis des colonnes vides
     if (notes_obj[i].evaluations.length === 0) {
-      ligne_matiere.innerHTML +=
-        "<td><input type='number' value='0' min='0' max='20' step='0.01'></td>";
-      ligne_matiere.innerHTML +=
-        "<td><input type='number' value='1' min='0' max='100' step='1'></td>";
-
-      for (let j = 0; j < max_eval - 1; j++) {
+      // decoché la la case à chocher pour ne pas afficher la matière
+      document.querySelector(
+        "#" + ligne_matiere.id + " input[type=checkbox]"
+      ).checked = false;
+      for (let j = 0; j < max_eval; j++) {
         ligne_matiere.innerHTML +=
           "<td><input type='number' value='' min='0' max='20' step='0.01'></td>";
         ligne_matiere.innerHTML +=
@@ -672,6 +686,8 @@ function export_as_pdf() {
   window.print();
 }
 
+document.getElementById("export").addEventListener("click", export_as_pdf);
+
 document
   .getElementById("showFormButton")
   .addEventListener("click", function () {
@@ -685,3 +701,8 @@ document
     let formContainer = document.getElementById("formContainer");
     formContainer.style.display = "none";
   });
+
+document.querySelectorAll("input[type='number']").forEach((input) => {
+  input.addEventListener("change", update);
+  input.addEventListener("change", () => console.log(input.value));
+});
