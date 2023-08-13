@@ -224,6 +224,12 @@ header > button {
   mix-blend-mode: screen;
 }
 
+.legals {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .loader-container {
   position: absolute;
   top: 0;
