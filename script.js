@@ -510,10 +510,13 @@ async function get_notes() {
     loader.classList.add("hidden");
     alert(notes_json.err);
     return;
-  } else if (notes_json[0].length === 0) {
+  } else if (notes_json[0].length === 0 || notes_json[0][0].matiere === "Aucune note n'a été saisie") {
+    notes_json[0] = [];
+    
     loader.classList.add("hidden");
     alert("Aucune note trouvée");
-  } else {
+    
+  } else if (notes_json[1].length === 0) {
     // Mémoriser les notes, coefs et ues dans le local storage
     localStorage.setItem("notes", JSON.stringify(notes_json));
 
@@ -523,6 +526,9 @@ async function get_notes() {
 
     let formContainer = document.getElementById("formContainer");
     formContainer.style.display = "none";
+  } else {
+    loader.classList.add("hidden");
+    alert("Aucune compétence trouvée");
   }
 }
 
