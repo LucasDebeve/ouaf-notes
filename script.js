@@ -254,11 +254,15 @@ function moyenneBonus(competence_id) {
     document.querySelector("#moy > td:nth-child(" + competence_id + ")")
       .innerHTML
   );
-  const bonus =
+  // Si la ligne de bonus existe
+  const ligne_bonus = document.querySelector("#bonus");
+  let bonus = 0;
+  if (ligne_bonus) {
+    bonus =
     document.querySelector("#bonus").classList[0] !== "option"
       ? parseFloat(document.querySelector("#bonus > td:last-child").innerHTML)
       : 0;
-
+  }
   const moyenneBonus = Math.min(
     Math.max(Math.round((moyenne + 0.5 * (bonus / 20)) * 1000) / 1000, 0),
     20
@@ -516,7 +520,11 @@ async function get_notes() {
     loader.classList.add("hidden");
     alert("Aucune note trouvée");
     
-  } else if (notes_json[1].length === 0) {
+  } else if (notes_json[1].length === 0)  {
+    loader.classList.add("hidden");
+    alert("Aucune compétence trouvée");
+  }
+  else {
     // Mémoriser les notes, coefs et ues dans le local storage
     localStorage.setItem("notes", JSON.stringify(notes_json));
 
@@ -526,9 +534,6 @@ async function get_notes() {
 
     let formContainer = document.getElementById("formContainer");
     formContainer.style.display = "none";
-  } else {
-    loader.classList.add("hidden");
-    alert("Aucune compétence trouvée");
   }
 }
 
@@ -609,6 +614,11 @@ function display_notes(notes_obj, ues, coefs) {
   document.querySelector("table tbody").appendChild(ligne_moy_bonus);
 
   // Ajouter les lignes de matières
+  // On récupère la matière Bonus
+  const matiereBonus = notes_obj.filter((matiere) => {
+    return matiere.matiere.toUpperCase().includes('BONIFICATION') || matiere.matiere.toUpperCase().includes('BONUS');
+  });
+
   for (let i = 0; i < notes_obj.length; i++) {
     let ligne_matiere = document.createElement("tr");
     if (notes_obj[i].matiere.includes("Bonification")) {
@@ -648,6 +658,7 @@ function display_notes(notes_obj, ues, coefs) {
     // Si aucune note n'est renseignée, ajouter une colonne note=0 et coef=1 puis des colonnes vides
     if (notes_obj[i].evaluations.length === 0) {
       // decoché la la case à chocher pour ne pas afficher la matière
+      console.log("#" + ligne_matiere.id + " input[type=checkbox]")
       document.querySelector(
         "#" + ligne_matiere.id + " input[type=checkbox]"
       ).checked = false;
