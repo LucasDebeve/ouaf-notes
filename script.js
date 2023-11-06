@@ -70,11 +70,11 @@ if (
 function calculTotalCoef(line_id) {
   let total = 0;
   const coef = document.querySelectorAll(
-    "#" + line_id + " > td:nth-child(-n+" + (compterCompetences() + 1) + ")"
+    "#" + line_id + " > td:nth-child(-n+" + (compterCompetences() + 1) + ") > input"
   );
   for (let i = 0; i < coef.length; i++) {
-    if (coef[i].innerHTML !== "") {
-      total += parseFloat(coef[i].innerHTML);
+    if (coef[i].value !== "") {
+      total += parseFloat(coef[i].value);
     }
   }
   // A changer
@@ -204,15 +204,15 @@ function totalCompetence(competence_id) {
     const ligne = lignes[i];
     const ligne_id = ligne.id;
     const cellule = document.querySelector(
-      "#" + ligne_id + " > td:nth-child(" + competence_id + ")"
+      "#" + ligne_id + " > td:nth-child(" + competence_id + ") > input"
     );
-    if (cellule.innerHTML !== "") {
-      total += parseFloat(cellule.innerHTML);
+    if (cellule.value !== "") {
+      total += parseFloat(cellule.value);
     }
   }
   document.querySelector(
-    "#total > td:nth-child(" + competence_id + ")"
-  ).innerHTML = total;
+    "#total > td:nth-child(" + competence_id + ") > input"
+  ).value = total;
   return total;
 }
 
@@ -229,10 +229,10 @@ function moyenneCompetence(competence_id) {
     const ligne = lignes[i];
     const ligne_id = ligne.id;
     const cellule = document.querySelector(
-      "#" + ligne_id + " > td:nth-child(" + competence_id + ")"
+      "#" + ligne_id + " > td:nth-child(" + competence_id + ") > input"
     );
-    if (cellule.innerHTML !== "") {
-      const coef = parseFloat(cellule.innerHTML);
+    if (cellule.value !== "") {
+      const coef = parseFloat(cellule.value);
       const moyenne = parseFloat(
         document.querySelector("#" + ligne_id + " > td:last-child").innerHTML
       );
@@ -597,7 +597,7 @@ function display_notes(notes_obj, ues, coefs) {
     if (i === nb_competences) {
       ligne_total.innerHTML += "<td class='totalCoef'></td>";
     } else {
-      ligne_total.innerHTML += "<td></td>";
+      ligne_total.innerHTML += "<td><input type='number' value='' min='0' step='1'></td>";
     }
     ligne_moy.innerHTML += "<td></td>";
   }
@@ -648,9 +648,9 @@ function display_notes(notes_obj, ues, coefs) {
       }
 
       if (k < coefs[w].coefs.length) {
-        ligne_matiere.innerHTML += "<td>" + coefs[w].coefs[k].coef + "</td>";
+        ligne_matiere.innerHTML += "<td> <input type='number' value='" + coefs[w].coefs[k].coef + "' min='0' step='1'></td>";
       } else {
-        ligne_matiere.innerHTML += "<td></td>";
+        ligne_matiere.innerHTML += "<td><input type='number' value='' min='0' step='1'></td>";
       }
     }
     // Colonnes du total des coefficients
