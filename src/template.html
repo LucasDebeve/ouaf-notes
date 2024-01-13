@@ -545,18 +545,25 @@
             </tr>
             </tbody>
         </table>
+        <div id="chart-panel" class="hidden">
+            <canvas id="competences-chart"></canvas>
+            <canvas id="matieres-chart"></canvas>
+        </div>
     </main>
     <footer class="print-hidden">
         <button id="update"><span class="material-symbols-outlined">
         refresh
       </span></button>
+        <button id="chart"><span class="material-symbols-outlined">
+        query_stats
+      </span></button>
         <button id="export"><span class="material-symbols-outlined">
         download
       </span></button>
-        <button onclick="ajouterColonneNoteCoef()"><span class="material-symbols-outlined">
+        <button id="ajouter"><span class="material-symbols-outlined">
         add
       </span></button>
-        <button onclick="supprimerColonneNoteCoef()"><span class="material-symbols-outlined">
+        <button id="supprimer"><span class="material-symbols-outlined">
         delete
       </span></button>
 

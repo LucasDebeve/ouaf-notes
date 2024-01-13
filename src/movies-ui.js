@@ -1,3 +1,4 @@
+import Chart from "chart.js/auto";
 import {
     calculMoyenneMatiere,
     moyenneBonus,
@@ -7,6 +8,11 @@ import {
     totalCompetence,
     getNotes,
 } from "./movies-api";
+
+export const moyennes = {
+    moyennesMatieres: [],
+    moyennesCompetences: [],
+};
 
 /**
  * Change le color scheme du navigateur en fonction de la checkbox
@@ -73,11 +79,13 @@ export function showMoyenneIntranet(moyennesMatieres) {
 /**
  * Affiche la moyenne d'une compétence
  * @param competenceId
+ * @returns la moyenne de la compétence
  */
 export function showMoyenneCompetence(competenceId) {
-    document.querySelector(`#moy > td:nth-child(${competenceId})`).innerHTML = (
-        Math.round(moyenneCompetence(competenceId) * 1000) / 1000
-    ).toString();
+    const moyenne = Math.round(moyenneCompetence(competenceId) * 1000) / 1000;
+    document.querySelector(`#moy > td:nth-child(${competenceId})`).innerHTML =
+        moyenne.toString();
+    return moyenne;
 }
 
 /**
@@ -370,7 +378,6 @@ export function displayNotes(notesObj, ues, coefs) {
         // Si aucune note n'est renseignée, ajouter une colonne note=0 et coef=1 puis des colonnes vides
         if (noteObj.evaluations.length === 0) {
             // decoché la la case à chocher pour ne pas afficher la matière
-            console.log(`#${ligneMatiere.id} input[type=checkbox]`);
             document.querySelector(
                 `#${ligneMatiere.id} input[type=checkbox]`,
             ).checked = false;
@@ -409,6 +416,8 @@ export function displayNotes(notesObj, ues, coefs) {
  * Actualise les totaux et moyennes
  */
 export function update() {
+    moyennes.moyennesMatieres = [];
+    moyennes.moyennesCompetences = [];
     // Parcours des colonnes des compétences
     const competences = document.querySelectorAll(
         `table > thead > tr:not(.option) > th:nth-child(-n+${
@@ -430,7 +439,15 @@ export function update() {
 
         total.push(calculTotalCoef(ligneId));
         if (ligneId !== "total") {
-            moyenne.push(calculMoyenneMatiere(compterCompetences(), ligneId));
+            const moyenneMatiere = calculMoyenneMatiere(
+                compterCompetences(),
+                ligneId,
+            );
+            moyennes.moyennesMatieres.push({
+                nom: ligneId,
+                moyenne: moyenneMatiere,
+            });
+            moyenne.push(moyenneMatiere);
             showMoyenneMatiere(ligneId);
         }
     });
@@ -446,7 +463,10 @@ export function update() {
     }
     */
     competences.forEach((competence, id) => {
-        showMoyenneCompetence(id + 2);
+        moyennes.moyennesCompetences.push({
+            nom: competence.innerHTML,
+            moyenne: showMoyenneCompetence(id + 2),
+        });
         showMoyenneBonus(id + 2);
     });
     document
@@ -462,10 +482,100 @@ export function update() {
                 }
             });
         });
+
+    const chartPanel = document.getElementById("chart-panel");
+    updateCharts(chartPanel);
 }
 
 export function exportAsPdf() {
     window.print();
+}
+
+export function updateCharts(chartPanel) {
+    if (moyennes.moyennesCompetences.length === 0) {
+        return;
+    }
+
+    chartPanel.innerHTML =
+        '<div class="chart-container"><canvas id="competences-chart" style="height: 60vh;"></canvas></div>' +
+        '<div class="chart-container"><canvas id="matieres-chart" style="height: 60vh;"></canvas></div>';
+
+    const options = {
+        scales: {
+            r: {
+                angleLines: {
+                    display: true,
+                },
+                suggestedMin: 0,
+                suggestedMax: 20,
+            },
+        },
+    };
+    const ctxCompetences = document.getElementById("competences-chart");
+    const ctxMatieres = document.getElementById("matieres-chart");
+    const chart_competences = new Chart(ctxCompetences, {
+        type: "radar",
+        options,
+        data: {
+            labels: moyennes.moyennesCompetences.map(
+                (competence) => competence.nom,
+            ),
+            datasets: [
+                {
+                    label: "Moyennes",
+                    data: moyennes.moyennesCompetences.map(
+                        (competence) => competence.moyenne,
+                    ),
+                    fill: true,
+                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                    borderColor: "rgb(255, 99, 132)",
+                    pointBackgroundColor: "rgb(255, 99, 132)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgb(255, 99, 132)",
+                },
+            ],
+        },
+    });
+    const chart_matiere = new Chart(ctxMatieres, {
+        type: "radar",
+        options,
+        data: {
+            labels: moyennes.moyennesMatieres.map((competence) => {
+                if (competence.nom !== "bonus") {
+                    return competence.nom;
+                }
+            }),
+            datasets: [
+                {
+                    label: "Moyennes",
+                    data: moyennes.moyennesMatieres.map((competence) => {
+                        if (competence.nom !== "bonus") {
+                            return competence.moyenne;
+                        }
+                    }),
+                    fill: true,
+                    backgroundColor: "rgba(54, 162, 235, 0.2)",
+                    borderColor: "rgb(54, 162, 235)",
+                    pointBackgroundColor: "rgb(54, 162, 235)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgb(54, 162, 235)",
+                },
+            ],
+        },
+    });
+}
+
+export function displayChart() {
+    const chart = document.getElementById("chart-panel");
+    chart.classList.toggle("hidden");
+    document.querySelector("main > table").classList.toggle("hidden");
+
+    if (chart.childNodes.length === 0) {
+        createChart(chart, "competences-chart");
+        createChart(chart, "matieres-chart");
+    }
 }
 
 export async function updateEvents() {
@@ -487,6 +597,17 @@ export async function updateEvents() {
 
     document.getElementById("update").addEventListener("click", () => {
         update();
+    });
+
+    document.getElementById("ajouter").addEventListener("click", () => {
+        ajouterColonneNoteCoef();
+    });
+    document.getElementById("supprimer").addEventListener("click", () => {
+        supprimerColonneNoteCoef();
+    });
+
+    document.getElementById("chart").addEventListener("click", () => {
+        displayChart();
     });
 
     document.getElementById("showFormButton").addEventListener("click", () => {

@@ -330,8 +330,20 @@ main {
     overflow: auto;
 }
 
-table {
+main > * {
     flex: 1;
+}
+
+#chart-panel:not(.hidden) {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.chart-container {
+    position: relative;
+    height: 100%;
+    width: 50%;
 }
 
 table > * > * > *:not(:has(> input)) {
