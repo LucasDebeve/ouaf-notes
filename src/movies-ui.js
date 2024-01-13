@@ -249,6 +249,170 @@ export function showTotalCompetence(competenceId) {
     ).value = totalCompetence(competenceId);
 }
 
+export function updateCharts(chartPanel) {
+    if (moyennes.moyennesCompetences.length === 0) {
+        return;
+    }
+
+    chartPanel.innerHTML = `
+<div class="chart-container">
+    <canvas id="competences-chart" style="height: 60vh;"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="matieres-chart" style="height: 60vh;"></canvas>
+</div>`;
+
+    const options = {
+        scales: {
+            r: {
+                angleLines: {
+                    display: true,
+                },
+                suggestedMin: 0,
+                suggestedMax: 20,
+            },
+        },
+    };
+    const ctxCompetences = document.getElementById("competences-chart");
+    const ctxMatieres = document.getElementById("matieres-chart");
+    const chartCompetences = new Chart(ctxCompetences, {
+        type: "radar",
+        options,
+        data: {
+            labels: moyennes.moyennesCompetences.map(
+                (competence) => competence.nom,
+            ),
+            datasets: [
+                {
+                    label: "Moyennes par compétences",
+                    data: moyennes.moyennesCompetences.map(
+                        (competence) => competence.moyenne,
+                    ),
+                    fill: true,
+                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                    borderColor: "rgb(255, 99, 132)",
+                    pointBackgroundColor: "rgb(255, 99, 132)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgb(255, 99, 132)",
+                },
+            ],
+        },
+    });
+    console.log(
+        moyennes.moyennesMatieres
+            .map((competence) =>
+                competence.nom === "bonus" ? null : competence.nom,
+            )
+            .filter((competence) => competence !== null),
+    );
+    const chartMatiere = new Chart(ctxMatieres, {
+        type: "radar",
+        options,
+        data: {
+            labels: moyennes.moyennesMatieres
+                .map((competence) =>
+                    competence.nom === "bonus" ? null : competence.nom,
+                )
+                .filter((competence) => competence !== null),
+            datasets: [
+                {
+                    label: "Moyennes par matières",
+                    data: moyennes.moyennesMatieres
+                        .map((competence) =>
+                            competence.nom === "bonus"
+                                ? null
+                                : competence.moyenne,
+                        )
+                        .filter((competence) => competence !== null),
+                    fill: true,
+                    backgroundColor: "rgba(54, 162, 235, 0.2)",
+                    borderColor: "rgb(54, 162, 235)",
+                    pointBackgroundColor: "rgb(54, 162, 235)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgb(54, 162, 235)",
+                },
+            ],
+        },
+    });
+}
+
+/**
+ * Actualise les totaux et moyennes
+ */
+export function update() {
+    moyennes.moyennesMatieres = [];
+    moyennes.moyennesCompetences = [];
+    // Parcours des colonnes des compétences
+    const competences = document.querySelectorAll(
+        `table > thead > tr:not(.option) > th:nth-child(-n+${
+            compterCompetences() + 1
+        }):not(:first-child)`,
+    );
+    competences.forEach((competence, id) => {
+        showTotalCompetence(id + 2);
+    });
+    // Parcours de l'ensemble des lignes du tableau
+    const lignes = document.querySelectorAll(
+        "table > tbody > tr:not(#moy, #moyBonus, .option)",
+    );
+
+    const total = [];
+    const moyenne = [];
+    lignes.forEach((ligne) => {
+        const ligneId = ligne.id;
+
+        total.push(calculTotalCoef(ligneId));
+        if (ligneId !== "total") {
+            const moyenneMatiere = calculMoyenneMatiere(
+                compterCompetences(),
+                ligneId,
+            );
+            moyennes.moyennesMatieres.push({
+                nom: ligneId,
+                moyenne: moyenneMatiere,
+            });
+            moyenne.push(moyenneMatiere);
+            showMoyenneMatiere(ligneId);
+        }
+    });
+    showMoyenneTotale(total.slice(0, total.length - 1), moyenne);
+    showMoyenneIntranet(moyenne);
+
+    // Calcul de la moyenne par competence
+
+    /*
+    for (let i = 0; i < competences.length; i += 1) {
+        moyenneCompetence(i + 2);
+        moyenneBonus(i + 2);
+    }
+    */
+    competences.forEach((competence, id) => {
+        moyennes.moyennesCompetences.push({
+            nom: competence.innerHTML,
+            moyenne: showMoyenneCompetence(id + 2),
+        });
+        showMoyenneBonus(id + 2);
+    });
+    document
+        .querySelectorAll("main input[type='checkbox']")
+        .forEach((checkbox) => {
+            checkbox.addEventListener("change", () => {
+                // Get checkbox parent row
+                const ligne = checkbox.parentNode.parentNode;
+                if (checkbox.checked) {
+                    ligne.classList.remove("option");
+                } else {
+                    ligne.classList.add("option");
+                }
+            });
+        });
+
+    const chartPanel = document.getElementById("chart-panel");
+    updateCharts(chartPanel);
+}
+
 /**
  * Affiche toutes les informations du bulletin
  * @param notesObj
@@ -412,173 +576,18 @@ export function displayNotes(notesObj, ues, coefs) {
     update();
 }
 
-/**
- * Actualise les totaux et moyennes
- */
-export function update() {
-    moyennes.moyennesMatieres = [];
-    moyennes.moyennesCompetences = [];
-    // Parcours des colonnes des compétences
-    const competences = document.querySelectorAll(
-        `table > thead > tr:not(.option) > th:nth-child(-n+${
-            compterCompetences() + 1
-        }):not(:first-child)`,
-    );
-    competences.forEach((competence, id) => {
-        showTotalCompetence(id + 2);
-    });
-    // Parcours de l'ensemble des lignes du tableau
-    const lignes = document.querySelectorAll(
-        "table > tbody > tr:not(#moy, #moyBonus, .option)",
-    );
-
-    const total = [];
-    const moyenne = [];
-    lignes.forEach((ligne) => {
-        const ligneId = ligne.id;
-
-        total.push(calculTotalCoef(ligneId));
-        if (ligneId !== "total") {
-            const moyenneMatiere = calculMoyenneMatiere(
-                compterCompetences(),
-                ligneId,
-            );
-            moyennes.moyennesMatieres.push({
-                nom: ligneId,
-                moyenne: moyenneMatiere,
-            });
-            moyenne.push(moyenneMatiere);
-            showMoyenneMatiere(ligneId);
-        }
-    });
-    showMoyenneTotale(total.slice(0, total.length - 1), moyenne);
-    showMoyenneIntranet(moyenne);
-
-    // Calcul de la moyenne par competence
-
-    /*
-    for (let i = 0; i < competences.length; i += 1) {
-        moyenneCompetence(i + 2);
-        moyenneBonus(i + 2);
-    }
-    */
-    competences.forEach((competence, id) => {
-        moyennes.moyennesCompetences.push({
-            nom: competence.innerHTML,
-            moyenne: showMoyenneCompetence(id + 2),
-        });
-        showMoyenneBonus(id + 2);
-    });
-    document
-        .querySelectorAll("main input[type='checkbox']")
-        .forEach((checkbox) => {
-            checkbox.addEventListener("change", () => {
-                // Get checkbox parent row
-                const ligne = checkbox.parentNode.parentNode;
-                if (checkbox.checked) {
-                    ligne.classList.remove("option");
-                } else {
-                    ligne.classList.add("option");
-                }
-            });
-        });
-
-    const chartPanel = document.getElementById("chart-panel");
-    updateCharts(chartPanel);
-}
-
 export function exportAsPdf() {
     window.print();
-}
-
-export function updateCharts(chartPanel) {
-    if (moyennes.moyennesCompetences.length === 0) {
-        return;
-    }
-
-    chartPanel.innerHTML =
-        '<div class="chart-container"><canvas id="competences-chart" style="height: 60vh;"></canvas></div>' +
-        '<div class="chart-container"><canvas id="matieres-chart" style="height: 60vh;"></canvas></div>';
-
-    const options = {
-        scales: {
-            r: {
-                angleLines: {
-                    display: true,
-                },
-                suggestedMin: 0,
-                suggestedMax: 20,
-            },
-        },
-    };
-    const ctxCompetences = document.getElementById("competences-chart");
-    const ctxMatieres = document.getElementById("matieres-chart");
-    const chart_competences = new Chart(ctxCompetences, {
-        type: "radar",
-        options,
-        data: {
-            labels: moyennes.moyennesCompetences.map(
-                (competence) => competence.nom,
-            ),
-            datasets: [
-                {
-                    label: "Moyennes",
-                    data: moyennes.moyennesCompetences.map(
-                        (competence) => competence.moyenne,
-                    ),
-                    fill: true,
-                    backgroundColor: "rgba(255, 99, 132, 0.2)",
-                    borderColor: "rgb(255, 99, 132)",
-                    pointBackgroundColor: "rgb(255, 99, 132)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgb(255, 99, 132)",
-                },
-            ],
-        },
-    });
-    const chart_matiere = new Chart(ctxMatieres, {
-        type: "radar",
-        options,
-        data: {
-            labels: moyennes.moyennesMatieres.map((competence) => {
-                if (competence.nom !== "bonus") {
-                    return competence.nom;
-                }
-            }),
-            datasets: [
-                {
-                    label: "Moyennes",
-                    data: moyennes.moyennesMatieres.map((competence) => {
-                        if (competence.nom !== "bonus") {
-                            return competence.moyenne;
-                        }
-                    }),
-                    fill: true,
-                    backgroundColor: "rgba(54, 162, 235, 0.2)",
-                    borderColor: "rgb(54, 162, 235)",
-                    pointBackgroundColor: "rgb(54, 162, 235)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgb(54, 162, 235)",
-                },
-            ],
-        },
-    });
 }
 
 export function displayChart() {
     const chart = document.getElementById("chart-panel");
     chart.classList.toggle("hidden");
     document.querySelector("main > table").classList.toggle("hidden");
-
-    if (chart.childNodes.length === 0) {
-        createChart(chart, "competences-chart");
-        createChart(chart, "matieres-chart");
-    }
 }
 
 export async function updateEvents() {
+    const chartPanel = document.getElementById("chart-panel");
     document.getElementById("export").addEventListener("click", exportAsPdf);
 
     document.getElementById("darkMode").addEventListener("change", () => {

@@ -513,6 +513,18 @@ footer button {
         font-size: 10px;
     }
 
+    #chart-panel {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+    #chart-panel canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
     .print-visible tr > .good {
         background-color: var(--success-color) !important;
     }
