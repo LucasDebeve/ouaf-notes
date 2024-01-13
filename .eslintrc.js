@@ -2,24 +2,24 @@ module.exports = {
     env: {
         browser: true,
         es2021: true,
-        'jest/globals': true,
+        "jest/globals": true,
     },
-    extends: ['airbnb-base', 'prettier'],
+    extends: ["airbnb-base", "prettier"],
     overrides: [],
     parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
+        ecmaVersion: "latest",
+        sourceType: "module",
     },
-    plugins: ['prettier', 'jest'],
+    plugins: ["prettier", "jest"],
     rules: {
-        'prettier/prettier': [
-            'warn',
+        "prettier/prettier": [
+            "warn",
             {
                 singleQuote: false,
-                trailingComma: 'all',
-                tabWidth: 2,
-            }
+                trailingComma: "all",
+                tabWidth: 4,
+            },
         ],
-        'import/prefer-default-export': ['off'],
+        "import/prefer-default-export": ["off"],
     },
 };

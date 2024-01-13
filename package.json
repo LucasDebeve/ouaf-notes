@@ -1,7 +1,7 @@
 {
-  "name": "Ouaf Notes",
-  "version": "2.0.0",
-  "description": "Application Web de simulation de bulletin universitaire pour les étudiants de l'IUT de Reims Châlons Charleville",
+  "name": "r301-js-introduction",
+  "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
