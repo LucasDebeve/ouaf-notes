@@ -1,0 +1,36 @@
+{
+  "name": "Ouaf Notes",
+  "version": "2.0.0",
+  "description": "Application Web de simulation de bulletin universitaire pour les étudiants de l'IUT de Reims Châlons Charleville",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest",
+    "lint": "npx eslint src tests",
+    "fix": "npx eslint src tests --fix",
+    "build": "npx webpack",
+    "build:prod": "npx webpack --mode=production",
+    "build:watch": "npx webpack --watch",
+    "start": "npx webpack serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.53.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jest": "^27.6.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "html-webpack-plugin": "^5.5.3",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "prettier": "^3.0.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
