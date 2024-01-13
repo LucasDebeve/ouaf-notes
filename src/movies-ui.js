@@ -220,11 +220,13 @@ export function calculTotalCoef(lineId) {
     const coef = document.querySelectorAll(
         `#${lineId} > td:nth-child(-n+${compterCompetences() + 1}) > input`,
     );
-    for (let i = 0; i < coef.length; i += 1) {
-        if (coef[i].value !== "") {
-            total += parseFloat(coef[i].value);
+    // Transform coef to array
+    coef.forEach((c) => {
+        if (c.value !== "") {
+            total += parseFloat(c.value.replace(",", "."));
         }
-    }
+    });
+
     // A changer
     if (total === 0) {
         total = 1;
@@ -414,7 +416,7 @@ export function update() {
         }):not(:first-child)`,
     );
     competences.forEach((competence, id) => {
-        totalCompetence(id + 2);
+        showTotalCompetence(id + 2);
     });
     // Parcours de l'ensemble des lignes du tableau
     const lignes = document.querySelectorAll(
