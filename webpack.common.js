@@ -4,6 +4,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
+const devMode = process.env.NODE_ENV !== "production";
+
 module.exports = {
     entry: {
         app: "./src/index.js",
@@ -14,16 +16,15 @@ module.exports = {
             template: path.resolve(__dirname, "./src/template.html"),
             filename: "index.html",
         }),
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css",
-        }),
-    ],
+    ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader"],
+                test: /\.(sa|sc|c)ss$/i,
+                use: [
+                    devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+                    "css-loader",
+                ],
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,

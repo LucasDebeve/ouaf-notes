@@ -1,3 +1,4 @@
+import css from "./style.css";
 import { displayNotes, updateEvents } from "./movies-ui";
 import { addImages } from "./add-images";
 
