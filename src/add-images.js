@@ -1,5 +1,6 @@
 import Logo from "../public/img/log_big.png";
 import Iut from "../public/img/logo_urca1.png";
+import icon from "../public/img/ouafnotes.ico";
 
 export function addImages() {
     const logo = document.createElement("img");
@@ -10,6 +11,13 @@ export function addImages() {
     const iut = document.createElement("img");
     iut.alt = "iut-reims";
     iut.src = Iut;
+
+    const iconIco = document.createElement("link");
+    iconIco.rel = "shortcut icon";
+    iconIco.type = "image/x-icon";
+    iconIco.href = icon;
+
+    document.querySelector("head").appendChild(iconIco);
 
     document
         .getElementById("logo-container")
