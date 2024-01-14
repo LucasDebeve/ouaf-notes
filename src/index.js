@@ -1,9 +1,11 @@
 import { displayNotes, updateEvents } from "./movies-ui";
+import { addImages } from "./add-images";
 
 if (process.env.NODE_ENV !== "production") {
     console.log("Looks like we are in development mode!");
 }
 
+addImages();
 updateEvents();
 // Verifie le color scheme du navigateur
 const userPrefersDark =

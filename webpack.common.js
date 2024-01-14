@@ -23,7 +23,15 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader"],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "style-loader",
+                    "css-loader",
+                ],
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: "asset/resource",
             },
         ],
     },
@@ -31,7 +39,7 @@ module.exports = {
         minimizer: [`...`, new TerserPlugin(), new CssMinimizerPlugin()],
     },
     output: {
-        filename: "[name].bundle.js",
+        filename: "bundle.js",
         path: path.resolve(__dirname, "dist"),
         clean: true,
     },

@@ -12,9 +12,9 @@
 </head>
 <body class="app">
     <header class="app__header print-hidden">
-        <div class="logo">
+        <div class="logo" id="logo-container">
             <img class="logo" src="img/log_big.png" alt="icon" />
-            <h1>OuafNotes</h1>
+            <h1 id="title">OuafNotes</h1>
         </div>
 
         <div class="menu">
@@ -26,9 +26,9 @@
             </div>
             <button id="showFormButton">Se connecter</button>
             <div id="formContainer" style="display: none;">
-                <div class="form">
+                <div id="onglet" class="form">
                     <img src="img/logo_urca1.png" alt="iut-reims">
-                    <p>Vos données sont utilisées uniquement pour remplir le tableau de simulation. Aucun enregistrement ou
+                    <p id="prevent">Vos données sont utilisées uniquement pour remplir le tableau de simulation. Aucun enregistrement ou
                         exploitation supplémentaire n'est effectué. Votre confidentialité est notre priorité.
                     </p>
                     <button id="CloseFormButton">X</button>
