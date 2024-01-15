@@ -244,9 +244,10 @@ export function calculTotalCoef(lineId) {
 }
 
 export function showTotalCompetence(competenceId) {
-    document.querySelector(
+    const a = document.querySelector(
         `#total > td:nth-child(${competenceId}) > input`,
-    ).value = totalCompetence(competenceId);
+    );
+    a.value = totalCompetence(competenceId);
 }
 
 export function updateCharts(chartPanel) {
@@ -299,7 +300,6 @@ export function updateCharts(chartPanel) {
             ],
         },
     });
-    console.log(moyennes.moyennesMatieres);
     const chartMatiere = new Chart(ctxMatieres, {
         type: "radar",
         options,
@@ -503,20 +503,22 @@ export function displayNotes(notesObj, ues, coefs) {
             matiere.matiere.toUpperCase().includes("BONIFICATION") ||
             matiere.matiere.toUpperCase().includes("BONUS"),
     );
-    notesObj.forEach((noteObj, i) => {
+    // Ajouter toutes les ligne de matières
+    coefs.forEach((matiere, idx) => {
+        // On créer la ligne de matière
         const ligneMatiere = document.createElement("tr");
-        if (noteObj.matiere.includes("Bonification")) {
+        if (matiere.matiere.includes("Bonification")) {
             ligneMatiere.id = "bonus";
         } else {
             // Remplacer les caractères spéciaux par des _
-            ligneMatiere.id = noteObj.matiere.replace(/[^a-zA-Z0-9]/g, "_");
+            ligneMatiere.id = matiere.matiere.replace(/[^a-zA-Z0-9]/g, "_");
         }
-        ligneMatiere.innerHTML = `<th><input id='${i}' type='checkbox' checked/>${notesObj[i].matiere}</th>`;
-        // Colonnes des coefficients
+        ligneMatiere.innerHTML = `<th><input id='${idx}' type='checkbox' checked/><label for='${idx}'>${matiere.matiere}</label></th>`;
+        // Ajouter les colonnes des coefficients
         ues.forEach((ue) => {
             // Trouve la matière dans le tableau des coefficients
             const coefCorrespondant = coefs.find((coef) =>
-                coef.matiere.includes(noteObj.matiere),
+                coef.matiere.includes(matiere.matiere),
             );
             // Trouve l'ue correspondante dans le tableau des coefficients
             const coefUe = coefCorrespondant.coefs.find(
@@ -531,12 +533,19 @@ export function displayNotes(notesObj, ues, coefs) {
         });
         // Colonnes du total des coefficients
         ligneMatiere.innerHTML += "<td class='totalCoef'></td>";
+        // Trouver la matière dans le tableau des notes
+        const noteObj = notesObj.find((note) =>
+            note.matiere.includes(matiere.matiere),
+        );
         // Si aucune note n'est renseignée, ajouter une colonne note=0 et coef=1 puis des colonnes vides
-        if (noteObj.evaluations.length === 0) {
+        if (!noteObj || noteObj.evaluations.length === 0) {
             // decoché la la case à chocher pour ne pas afficher la matière
-            document.querySelector(
+            const check = ligneMatiere.querySelector(
                 `#${ligneMatiere.id} input[type=checkbox]`,
-            ).checked = false;
+            );
+            if (check) {
+                check.checked = false;
+            }
             for (let j = 0; j < maxEval; j += 1) {
                 ligneMatiere.innerHTML +=
                     "<td><input type='number' value='' min='0' max='20' step='0.01'></td>";
@@ -564,7 +573,6 @@ export function displayNotes(notesObj, ues, coefs) {
         const ligneMoyenne = document.querySelector("#total");
         ligneMoyenne.insertAdjacentElement("beforebegin", ligneMatiere);
     });
-
     update();
 }
 

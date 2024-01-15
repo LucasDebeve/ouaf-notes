@@ -1,5 +1,5 @@
 import "./style.css";
-import { displayNotes, updateEvents } from "./movies-ui";
+import { displayNotes, update, updateEvents } from "./movies-ui";
 import { addImages } from "./add-images";
 
 if (process.env.NODE_ENV !== "production") {
@@ -31,6 +31,7 @@ if (
     notesJson[2].length > 0
 ) {
     displayNotes(notesJson[0], notesJson[1], notesJson[2]);
+    update();
 } else {
     ueCount = document.querySelectorAll("th.ue").length;
     const coefs = document.querySelectorAll(

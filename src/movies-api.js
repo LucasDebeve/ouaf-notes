@@ -8,7 +8,7 @@ export function totalCompetence(competenceId) {
         "table > tbody > tr:not(#moy, #moyBonus, #total, .option)",
     );
     let total = 0;
-    for (let i = 0; i < lignes.length; i++) {
+    for (let i = 0; i < lignes.length; i += 1) {
         const ligne = lignes[i];
         const ligneId = ligne.id;
         const cellule = document.querySelector(
@@ -88,9 +88,6 @@ export async function getNotes() {
     } else {
         // Mémoriser les notes, coefs et ues dans le local storage
         localStorage.setItem("notes", JSON.stringify(notesJson));
-
-        console.log(notesJson);
-
         return notesJson;
         /*
         display_notes(notesJson[0], notesJson[1], notesJson[2]);
