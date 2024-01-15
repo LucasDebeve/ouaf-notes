@@ -89,6 +89,8 @@ export async function getNotes() {
         // Mémoriser les notes, coefs et ues dans le local storage
         localStorage.setItem("notes", JSON.stringify(notesJson));
 
+        console.log(notesJson);
+
         return notesJson;
         /*
         display_notes(notesJson[0], notesJson[1], notesJson[2]);

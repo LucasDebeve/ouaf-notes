@@ -336,14 +336,14 @@ main > * {
 
 #chart-panel:not(.hidden) {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
     padding: 1rem;
 }
 
-.chart-container {
-    position: relative;
-    height: 100%;
-    width: 50%;
+#chart-panel canvas {
+    width: 100% !important;
 }
 
 table > * > * > *:not(:has(> input)) {
@@ -491,6 +491,17 @@ footer button {
 
     header button {
         width: auto;
+    }
+}
+
+@media screen and (min-width: 1350px) {
+    #chart-panel:not(.hidden) {
+        flex-direction: row;
+    }
+
+    .chart-container {
+        height: 100%;
+        width: 50%;
     }
 }
 

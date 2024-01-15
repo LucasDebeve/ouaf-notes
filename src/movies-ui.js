@@ -299,20 +299,17 @@ export function updateCharts(chartPanel) {
             ],
         },
     });
-    console.log(
-        moyennes.moyennesMatieres
-            .map((competence) =>
-                competence.nom === "bonus" ? null : competence.nom,
-            )
-            .filter((competence) => competence !== null),
-    );
+    console.log(moyennes.moyennesMatieres);
     const chartMatiere = new Chart(ctxMatieres, {
         type: "radar",
         options,
         data: {
             labels: moyennes.moyennesMatieres
                 .map((competence) =>
-                    competence.nom === "bonus" ? null : competence.nom,
+                    competence.nom.toUpperCase().includes("BONUS") ||
+                    competence.nom.toUpperCase().includes("BONIFICATION")
+                        ? null
+                        : competence.nom,
                 )
                 .filter((competence) => competence !== null),
             datasets: [
@@ -320,7 +317,10 @@ export function updateCharts(chartPanel) {
                     label: "Moyennes par matières",
                     data: moyennes.moyennesMatieres
                         .map((competence) =>
-                            competence.nom === "bonus"
+                            competence.nom.toUpperCase().includes("BONUS") ||
+                            competence.nom
+                                .toUpperCase()
+                                .includes("BONIFICATION")
                                 ? null
                                 : competence.moyenne,
                         )
@@ -370,7 +370,7 @@ export function update() {
                 ligneId,
             );
             moyennes.moyennesMatieres.push({
-                nom: ligneId,
+                nom: ligne.childNodes[0].textContent,
                 moyenne: moyenneMatiere,
             });
             moyenne.push(moyenneMatiere);
@@ -503,7 +503,6 @@ export function displayNotes(notesObj, ues, coefs) {
             matiere.matiere.toUpperCase().includes("BONIFICATION") ||
             matiere.matiere.toUpperCase().includes("BONUS"),
     );
-
     notesObj.forEach((noteObj, i) => {
         const ligneMatiere = document.createElement("tr");
         if (noteObj.matiere.includes("Bonification")) {
@@ -514,29 +513,22 @@ export function displayNotes(notesObj, ues, coefs) {
         }
         ligneMatiere.innerHTML = `<th><input id='${i}' type='checkbox' checked/>${notesObj[i].matiere}</th>`;
         // Colonnes des coefficients
-        for (let j = 0; j < ues.length; j += 1) {
-            let w = 0;
-            while (
-                w < coefs.length &&
-                !coefs[w].matiere.includes(noteObj.matiere)
-            ) {
-                w += 1;
-            }
-            let k = 0;
-            while (
-                k < coefs[w].coefs.length &&
-                coefs[w].coefs[k].ue !== ues[j].id
-            ) {
-                k += 1;
-            }
-
-            if (k < coefs[w].coefs.length) {
-                ligneMatiere.innerHTML += `<td> <input type='number' value='${coefs[w].coefs[k].coef}' min='0' step='1'></td>`;
+        ues.forEach((ue) => {
+            // Trouve la matière dans le tableau des coefficients
+            const coefCorrespondant = coefs.find((coef) =>
+                coef.matiere.includes(noteObj.matiere),
+            );
+            // Trouve l'ue correspondante dans le tableau des coefficients
+            const coefUe = coefCorrespondant.coefs.find(
+                (ueCoef) => ueCoef.ue === ue.id,
+            );
+            if (coefUe) {
+                ligneMatiere.innerHTML += `<td> <input type='number' value='${coefUe.coef}' min='0' step='1'></td>`;
             } else {
                 ligneMatiere.innerHTML +=
                     "<td><input type='number' value='' min='0' step='1'></td>";
             }
-        }
+        });
         // Colonnes du total des coefficients
         ligneMatiere.innerHTML += "<td class='totalCoef'></td>";
         // Si aucune note n'est renseignée, ajouter une colonne note=0 et coef=1 puis des colonnes vides
