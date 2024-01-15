@@ -337,13 +337,18 @@ main > * {
 #chart-panel:not(.hidden) {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 1rem;
     padding: 1rem;
 }
 
+.chart-container {
+    width: 100%;
+}
+
 #chart-panel canvas {
     width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
 }
 
 table > * > * > *:not(:has(> input)) {
@@ -492,16 +497,16 @@ footer button {
     header button {
         width: auto;
     }
-}
 
-@media screen and (min-width: 1350px) {
     #chart-panel:not(.hidden) {
         flex-direction: row;
+        gap: 2rem;
+        padding: 0;
     }
 
-    .chart-container {
-        height: 100%;
-        width: 50%;
+    #chart-panel canvas {
+        width: 90% !important;
+        height: 90% !important;
     }
 }
 
@@ -516,24 +521,26 @@ footer button {
         font-size: 10px;
         padding: 0;
     }
+
+    #chart-panel {
+        display: flex;
+        flex-direction: row !important;
+        gap: 3rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .chart-container {
+        width: 50vw;
+        height: 50vw;
+    }
+
     .print-visible > *,
     .print-visible > * > *,
     .print-visible > * > * > *,
     .print-visible #total > td:last-child,
     .print-visible #moyBonus > td {
         font-size: 10px;
-    }
-
-    #chart-panel {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
-    }
-
-    #chart-panel canvas {
-        width: 100% !important;
-        height: 100% !important;
     }
 
     .print-visible tr > .good {

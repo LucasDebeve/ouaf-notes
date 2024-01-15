@@ -254,7 +254,6 @@ export function updateCharts(chartPanel) {
     if (moyennes.moyennesCompetences.length === 0) {
         return;
     }
-
     chartPanel.innerHTML = `
 <div class="chart-container">
     <canvas id="competences-chart" style="height: 60vh;"></canvas>
@@ -305,26 +304,24 @@ export function updateCharts(chartPanel) {
         options,
         data: {
             labels: moyennes.moyennesMatieres
-                .map((competence) =>
-                    competence.nom.toUpperCase().includes("BONUS") ||
-                    competence.nom.toUpperCase().includes("BONIFICATION")
+                .map((matiere) =>
+                    matiere.nom.toUpperCase().includes("BONUS") ||
+                    matiere.nom.toUpperCase().includes("BONIFICATION")
                         ? null
-                        : competence.nom,
+                        : matiere.nom.split(" | ")[0],
                 )
                 .filter((competence) => competence !== null),
             datasets: [
                 {
                     label: "Moyennes par matières",
                     data: moyennes.moyennesMatieres
-                        .map((competence) =>
-                            competence.nom.toUpperCase().includes("BONUS") ||
-                            competence.nom
-                                .toUpperCase()
-                                .includes("BONIFICATION")
+                        .map((matiere) =>
+                            matiere.nom.toUpperCase().includes("BONUS") ||
+                            matiere.nom.toUpperCase().includes("BONIFICATION")
                                 ? null
-                                : competence.moyenne,
+                                : matiere.moyenne,
                         )
-                        .filter((competence) => competence !== null),
+                        .filter((matiere) => matiere !== null),
                     fill: true,
                     backgroundColor: "rgba(54, 162, 235, 0.2)",
                     borderColor: "rgb(54, 162, 235)",
@@ -513,7 +510,7 @@ export function displayNotes(notesObj, ues, coefs) {
             // Remplacer les caractères spéciaux par des _
             ligneMatiere.id = matiere.matiere.replace(/[^a-zA-Z0-9]/g, "_");
         }
-        ligneMatiere.innerHTML = `<th><input id='${idx}' type='checkbox' checked/><label for='${idx}'>${matiere.matiere}</label></th>`;
+        ligneMatiere.innerHTML = `<th><input class='print-hidden' id='${idx}' type='checkbox' checked/><label for='${idx}'>${matiere.matiere}</label></th>`;
         // Ajouter les colonnes des coefficients
         ues.forEach((ue) => {
             // Trouve la matière dans le tableau des coefficients
